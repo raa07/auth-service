@@ -13,29 +13,36 @@ services:
 
   auth-backend:
     build: .
+    restart: always
     depends_on:
+      - rabbitmq
+    links:
+      - rabbitmq
+    volumes:
+       - auth-store:/app/storage # comment this line if you need local files share
+#       - ./:/app/:cached # uncomment this line if you need local files share
+#    command: bin/console rabbitmq:consumer --no-interaction -m 10 send_email
+
+  auth-worker:
+    build: .
+    depends_on:
+      - rabbitmq
+    links:
       - rabbitmq
     restart: always
     volumes:
        - auth-store:/app/storage # comment this line if you need local files share
 #       - ./:/app/:cached # uncomment this line if you need local files share
-    command: bin/console rabbitmq:consumer --no-interaction send_email
-
-#  auth-worker:
-#    build: .
-#    volumes:
-#       - auth-store:/app/storage # comment this line if you need local files share
-##       - ./:/app/:cached # uncomment this line if you need local files share
-#    command: ['./bin/hello-worker']
+    command: bin/console rabbitmq:consumer send_email
 
   rabbitmq:
     image: rabbitmq:3.7-management-alpine
     hostname: "rabbitmq"
     ports:
-      - "5672:5672"
-      -  127.0.0.1:15672:15672
-#     -  127.0.0.1:5672:5672
 #      - "5672:5672"
+      -  127.0.0.1:15672:15672
+#      -  127.0.0.1:5672:5672
+      - "5672:5672"
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
     labels:

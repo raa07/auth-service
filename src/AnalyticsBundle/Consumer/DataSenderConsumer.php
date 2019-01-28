@@ -12,6 +12,7 @@ class DataSenderConsumer implements ConsumerInterface
 {
     public function execute(AMQPMessage $msg)
     {
-        file_put_contents('test.txt', $msg->getBody());
+        echo $msg->getBody();
+        file_put_contents('/app/storage/test.txt', 'asdfasdfasd');
     }
 }

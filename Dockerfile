@@ -28,6 +28,8 @@ RUN docker-php-ext-install sockets
 RUN docker-php-ext-enable sockets
 RUN docker-php-ext-install bcmath
 RUN docker-php-ext-enable bcmath
+RUN docker-php-ext-install mbstring
+RUN docker-php-ext-enable mbstring
 
 RUN sed -i "s/\(user\|group\) = www-data/\1 = root/" /usr/local/etc/php-fpm.d/www.conf
 

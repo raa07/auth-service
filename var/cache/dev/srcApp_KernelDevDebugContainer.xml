@@ -12,6 +12,10 @@
       <parameter key="FrameworkBundle">Symfony\Bundle\FrameworkBundle\FrameworkBundle</parameter>
       <parameter key="AnalyticsBundle">App\AnalyticsBundle\AnalyticsBundle</parameter>
       <parameter key="OldSoundRabbitMqBundle">OldSound\RabbitMqBundle\OldSoundRabbitMqBundle</parameter>
+      <parameter key="FOSRestBundle">FOS\RestBundle\FOSRestBundle</parameter>
+      <parameter key="JMSSerializerBundle">JMS\SerializerBundle\JMSSerializerBundle</parameter>
+      <parameter key="SecurityBundle">Symfony\Bundle\SecurityBundle\SecurityBundle</parameter>
+      <parameter key="LexikJWTAuthenticationBundle">Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle</parameter>
     </parameter>
     <parameter key="kernel.bundles_metadata" type="collection">
       <parameter key="FrameworkBundle" type="collection">
@@ -25,6 +29,22 @@
       <parameter key="OldSoundRabbitMqBundle" type="collection">
         <parameter key="path">/home/uh/mine/projects/php/tests/another/auth-service/vendor/php-amqplib/rabbitmq-bundle</parameter>
         <parameter key="namespace">OldSound\RabbitMqBundle</parameter>
+      </parameter>
+      <parameter key="FOSRestBundle" type="collection">
+        <parameter key="path">/home/uh/mine/projects/php/tests/another/auth-service/vendor/friendsofsymfony/rest-bundle</parameter>
+        <parameter key="namespace">FOS\RestBundle</parameter>
+      </parameter>
+      <parameter key="JMSSerializerBundle" type="collection">
+        <parameter key="path">/home/uh/mine/projects/php/tests/another/auth-service/vendor/jms/serializer-bundle</parameter>
+        <parameter key="namespace">JMS\SerializerBundle</parameter>
+      </parameter>
+      <parameter key="SecurityBundle" type="collection">
+        <parameter key="path">/home/uh/mine/projects/php/tests/another/auth-service/vendor/symfony/security-bundle</parameter>
+        <parameter key="namespace">Symfony\Bundle\SecurityBundle</parameter>
+      </parameter>
+      <parameter key="LexikJWTAuthenticationBundle" type="collection">
+        <parameter key="path">/home/uh/mine/projects/php/tests/another/auth-service/vendor/lexik/jwt-authentication-bundle</parameter>
+        <parameter key="namespace">Lexik\Bundle\JWTAuthenticationBundle</parameter>
       </parameter>
     </parameter>
     <parameter key="kernel.charset">UTF-8</parameter>
@@ -76,6 +96,21 @@
     <parameter key="old_sound_rabbit_mq.data_collector.class">OldSound\RabbitMqBundle\DataCollector\MessageDataCollector</parameter>
     <parameter key="old_sound_rabbit_mq.parts_holder.class">OldSound\RabbitMqBundle\RabbitMq\AmqpPartsHolder</parameter>
     <parameter key="old_sound_rabbit_mq.fallback.class">OldSound\RabbitMqBundle\RabbitMq\Fallback</parameter>
+    <parameter key="security.authentication.trust_resolver.anonymous_class">null</parameter>
+    <parameter key="security.authentication.trust_resolver.rememberme_class">null</parameter>
+    <parameter key="security.role_hierarchy.roles" type="collection"/>
+    <parameter key="security.access.denied_url">null</parameter>
+    <parameter key="security.authentication.manager.erase_credentials">true</parameter>
+    <parameter key="security.authentication.session_strategy.strategy">migrate</parameter>
+    <parameter key="security.access.always_authenticate_before_granting">false</parameter>
+    <parameter key="security.authentication.hide_user_not_found">true</parameter>
+    <parameter key="lexik_jwt_authentication.pass_phrase">%env(JWT_PASSPHRASE)%</parameter>
+    <parameter key="lexik_jwt_authentication.token_ttl">3600</parameter>
+    <parameter key="lexik_jwt_authentication.clock_skew">0</parameter>
+    <parameter key="lexik_jwt_authentication.user_identity_field">username</parameter>
+    <parameter key="lexik_jwt_authentication.user_id_claim">username</parameter>
+    <parameter key="lexik_jwt_authentication.encoder.signature_algorithm">RS256</parameter>
+    <parameter key="lexik_jwt_authentication.encoder.crypto_engine">openssl</parameter>
     <parameter key="old_sound_rabbit_mq.base_amqp" type="collection">
       <parameter>old_sound_rabbit_mq.send_email_producer</parameter>
       <parameter>old_sound_rabbit_mq.send_email_consumer</parameter>
@@ -111,6 +146,7 @@
         <argument type="service" id="argument_resolver.request_attribute"/>
         <argument type="service" id="argument_resolver.request"/>
         <argument type="service" id="argument_resolver.session"/>
+        <argument type="service" id="security.user_value_resolver"/>
         <argument type="service" id="argument_resolver.service"/>
         <argument type="service" id="argument_resolver.default"/>
         <argument type="service" id="argument_resolver.variadic"/>
@@ -183,6 +219,14 @@
           <argument>onKernelException</argument>
         </argument>
         <argument>-2048</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service" id="fos_rest.body_listener"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>10</argument>
       </call>
       <call method="addListener">
         <argument>kernel.response</argument>
@@ -320,6 +364,38 @@
         </argument>
         <argument>-64</argument>
       </call>
+      <call method="addListener">
+        <argument>kernel.response</argument>
+        <argument type="collection">
+          <argument type="service" id="security.rememberme.response_listener"/>
+          <argument>onKernelResponse</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>debug.security.authorization.vote</argument>
+        <argument type="collection">
+          <argument type="service" id="debug.security.voter.vote_listener"/>
+          <argument>onVoterVote</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.request</argument>
+        <argument type="collection">
+          <argument type="service" id="debug.security.firewall"/>
+          <argument>onKernelRequest</argument>
+        </argument>
+        <argument>8</argument>
+      </call>
+      <call method="addListener">
+        <argument>kernel.finish_request</argument>
+        <argument type="collection">
+          <argument type="service" id="debug.security.firewall"/>
+          <argument>onKernelFinishRequest</argument>
+        </argument>
+        <argument>0</argument>
+      </call>
     </service>
     <service id="http_kernel" class="Symfony\Component\HttpKernel\HttpKernel" public="true">
       <tag name="container.hot_path"/>
@@ -362,9 +438,13 @@
     <service id="services_resetter" class="Symfony\Component\HttpKernel\DependencyInjection\ServicesResetter" public="true">
       <argument type="iterator">
         <argument key="http_exception_listener" type="service" id="http_exception_listener" on-invalid="ignore_uninitialized"/>
+        <argument key="fos_rest.view_handler.default" type="service" id="fos_rest.view_handler.default" on-invalid="ignore_uninitialized"/>
+        <argument key="security.token_storage" type="service" id="security.token_storage" on-invalid="ignore_uninitialized"/>
       </argument>
       <argument type="collection">
         <argument key="http_exception_listener">reset</argument>
+        <argument key="fos_rest.view_handler.default">reset</argument>
+        <argument key="security.token_storage">setToken</argument>
       </argument>
     </service>
     <service id="fragment.handler" class="Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler" public="false">
@@ -643,6 +723,7 @@
         <argument key="cache.validator" type="service" id="cache.validator" on-invalid="ignore_uninitialized"/>
         <argument key="cache.serializer" type="service" id="cache.serializer" on-invalid="ignore_uninitialized"/>
         <argument key="cache.annotations" type="service" id="cache.annotations" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.security_expression_language" type="service" id="cache.security_expression_language" on-invalid="ignore_uninitialized"/>
       </argument>
     </service>
     <service id="cache.global_clearer" class="Symfony\Component\HttpKernel\CacheClearer\Psr6CacheClearer" public="true">
@@ -653,6 +734,7 @@
         <argument key="cache.validator" type="service" id="cache.validator" on-invalid="ignore_uninitialized"/>
         <argument key="cache.serializer" type="service" id="cache.serializer" on-invalid="ignore_uninitialized"/>
         <argument key="cache.annotations" type="service" id="cache.annotations" on-invalid="ignore_uninitialized"/>
+        <argument key="cache.security_expression_language" type="service" id="cache.security_expression_language" on-invalid="ignore_uninitialized"/>
       </argument>
     </service>
     <service id=".1_NativeFileSessionHandler~XKRFYY1" class="Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler" public="false">
@@ -696,6 +778,19 @@
     <service id="session.save_listener" class="Symfony\Component\HttpKernel\EventListener\SaveSessionListener" public="false">
       <deprecated>The "%service_id%" service is deprecated since Symfony 4.1. Use the "session_listener" service instead.</deprecated>
     </service>
+    <service id="security.csrf.token_generator" class="Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator" public="false"/>
+    <service id="security.csrf.token_storage" class="Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage" public="false">
+      <argument type="service" id="session"/>
+    </service>
+    <service id="security.csrf.token_manager" class="Symfony\Component\Security\Csrf\CsrfTokenManager" public="true">
+      <argument type="service" id="security.csrf.token_generator"/>
+      <argument type="service" id="security.csrf.token_storage"/>
+      <argument type="service" id="request_stack" on-invalid="ignore"/>
+    </service>
+    <service id="twig.runtime.security_csrf" class="Symfony\Bridge\Twig\Extension\CsrfRuntime" public="false">
+      <tag name="twig.runtime"/>
+      <argument type="service" id="security.csrf.token_manager"/>
+    </service>
     <service id=".cache_connection.GD_MSZC" class="Symfony\Component\Cache\Adapter\AbstractAdapter" public="false">
       <argument>redis://localhost</argument>
       <argument type="collection">
@@ -709,6 +804,10 @@
         <argument key="lazy">true</argument>
       </argument>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createConnection"/>
+    </service>
+    <service id="cache.property_access" class="Symfony\Component\Cache\Adapter\ArrayAdapter" public="false">
+      <argument>0</argument>
+      <argument>false</argument>
     </service>
     <service id="debug.debug_handlers_listener" class="Symfony\Component\HttpKernel\EventListener\DebugHandlersListener" public="false">
       <tag name="kernel.event_subscriber"/>
@@ -743,6 +842,27 @@
       </call>
       <call method="addLoader">
         <argument type="service" id="routing.loader.service"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="fos_rest.routing.loader.directory"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="fos_rest.routing.loader.controller"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="fos_rest.routing.loader.yaml_collection"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="fos_rest.routing.loader.xml_collection"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.annotation"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.annotation.directory"/>
+      </call>
+      <call method="addLoader">
+        <argument type="service" id="routing.loader.annotation.file"/>
       </call>
     </service>
     <service id="routing.loader.xml" class="Symfony\Component\Routing\Loader\XmlFileLoader" public="false">
@@ -835,6 +955,54 @@
     <service id="Symfony\Bundle\FrameworkBundle\Controller\TemplateController" class="Symfony\Bundle\FrameworkBundle\Controller\TemplateController" public="true">
       <argument>null</argument>
       <argument>null</argument>
+    </service>
+    <service id="routing.loader.annotation" class="Symfony\Bundle\FrameworkBundle\Routing\AnnotatedRouteControllerLoader" public="false">
+      <tag name="routing.loader" priority="-10"/>
+      <argument type="service" id="annotations.reader"/>
+    </service>
+    <service id="routing.loader.annotation.directory" class="Symfony\Component\Routing\Loader\AnnotationDirectoryLoader" public="false">
+      <tag name="routing.loader" priority="-10"/>
+      <argument type="service" id="file_locator"/>
+      <argument type="service" id="routing.loader.annotation"/>
+    </service>
+    <service id="routing.loader.annotation.file" class="Symfony\Component\Routing\Loader\AnnotationFileLoader" public="false">
+      <tag name="routing.loader" priority="-10"/>
+      <argument type="service" id="file_locator"/>
+      <argument type="service" id="routing.loader.annotation"/>
+    </service>
+    <service id=".2_PhpArrayAdapter~BfBQcsy" class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" public="false">
+      <argument>/home/uh/mine/projects/php/tests/another/auth-service/var/cache/dev/annotations.php</argument>
+      <argument type="service" id="cache.annotations"/>
+      <factory class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" method="create"/>
+    </service>
+    <service id=".1_ArrayCache~BfBQcsy" class="Doctrine\Common\Cache\ArrayCache" public="false"/>
+    <service id="annotations.reader" class="Doctrine\Common\Annotations\AnnotationReader" public="false">
+      <call method="addGlobalIgnoredName">
+        <argument>required</argument>
+        <argument type="service" id="annotations.dummy_registry"/>
+      </call>
+    </service>
+    <service id="annotations.dummy_registry" class="Doctrine\Common\Annotations\AnnotationRegistry" public="false">
+      <call method="registerUniqueLoader">
+        <argument>class_exists</argument>
+      </call>
+    </service>
+    <service id="annotations.filesystem_cache" class="Doctrine\Common\Cache\FilesystemCache" public="false">
+      <argument></argument>
+    </service>
+    <service id="annotations.cache_warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\AnnotationsCacheWarmer" public="false">
+      <argument type="service" id="annotations.reader"/>
+      <argument>/home/uh/mine/projects/php/tests/another/auth-service/var/cache/dev/annotations.php</argument>
+      <argument>#^Symfony\\(?:Component\\HttpKernel\\|Bundle\\FrameworkBundle\\Controller\\(?!AbstractController$|Controller$))#</argument>
+      <argument>true</argument>
+    </service>
+    <service id="annotations.cache" class="Symfony\Component\Cache\DoctrineProvider" public="false">
+      <argument type="service" id=".2_PhpArrayAdapter~BfBQcsy"/>
+    </service>
+    <service id="property_accessor" class="Symfony\Component\PropertyAccess\PropertyAccessor" public="false">
+      <argument>false</argument>
+      <argument>false</argument>
+      <argument type="service" id="cache.property_access" on-invalid="ignore"/>
     </service>
     <service id="old_sound_rabbit_mq.parts_holder" class="OldSound\RabbitMqBundle\RabbitMq\AmqpPartsHolder" public="true">
       <call method="addPart">
@@ -931,7 +1099,7 @@
       </call>
     </service>
     <service id="old_sound_rabbit_mq.connection_factory.default" class="OldSound\RabbitMqBundle\RabbitMq\AMQPConnectionFactory" public="false">
-      <argument>PhpAmqpLib\Connection\AMQPSocketConnection</argument>
+      <argument>PhpAmqpLib\Connection\AMQPConnection</argument>
       <argument type="collection">
         <argument key="host">rabbitmq</argument>
         <argument key="port">5672</argument>
@@ -939,16 +1107,16 @@
         <argument key="password">guest</argument>
         <argument key="vhost">/</argument>
         <argument key="lazy">false</argument>
-        <argument key="connection_timeout">3</argument>
-        <argument key="read_write_timeout">3</argument>
-        <argument key="keepalive">false</argument>
-        <argument key="heartbeat">0</argument>
-        <argument key="use_socket">true</argument>
+        <argument key="connection_timeout">60</argument>
+        <argument key="read_write_timeout">60</argument>
+        <argument key="use_socket">false</argument>
         <argument key="url"></argument>
         <argument key="ssl_context" type="collection"/>
+        <argument key="keepalive">false</argument>
+        <argument key="heartbeat">0</argument>
       </argument>
     </service>
-    <service id="old_sound_rabbit_mq.connection.default" class="PhpAmqpLib\Connection\AMQPSocketConnection" public="true">
+    <service id="old_sound_rabbit_mq.connection.default" class="PhpAmqpLib\Connection\AMQPConnection" public="true">
       <tag name="old_sound_rabbit_mq.connection"/>
       <factory service="old_sound_rabbit_mq.connection_factory.default" method="createConnection"/>
     </service>
@@ -1026,6 +1194,1259 @@
         <argument type="service" id="event_dispatcher" on-invalid="ignore"/>
       </call>
     </service>
+    <service id="fos_rest.view_handler.default" class="FOS\RestBundle\View\ViewHandler" public="false">
+      <tag name="kernel.reset" method="reset"/>
+      <argument type="service" id="router.default"/>
+      <argument type="service" id="fos_rest.serializer.jms"/>
+      <argument>null</argument>
+      <argument type="service" id="request_stack"/>
+      <argument type="collection">
+        <argument key="json">false</argument>
+        <argument key="xml">false</argument>
+        <argument key="html">true</argument>
+      </argument>
+      <argument>400</argument>
+      <argument>204</argument>
+      <argument>false</argument>
+      <argument type="collection">
+        <argument key="html">302</argument>
+      </argument>
+      <argument>twig</argument>
+      <argument type="collection">
+        <argument key="serializeNullStrategy">false</argument>
+      </argument>
+    </service>
+    <service id="fos_rest.view_handler.jsonp" class="FOS\RestBundle\View\JsonpHandler" public="false">
+      <argument></argument>
+    </service>
+    <service id="fos_rest.routing.loader.directory" class="FOS\RestBundle\Routing\Loader\DirectoryRouteLoader" public="false">
+      <tag name="routing.loader"/>
+      <argument type="service" id="file_locator"/>
+      <argument type="service" id="fos_rest.routing.loader.processor"/>
+    </service>
+    <service id="fos_rest.routing.loader.controller" class="FOS\RestBundle\Routing\Loader\RestRouteLoader" public="false">
+      <tag name="routing.loader"/>
+      <argument type="service" id="service_container"/>
+      <argument type="service" id="file_locator"/>
+      <argument type="service" id="controller_name_converter"/>
+      <argument type="service" id="fos_rest.routing.loader.reader.controller"/>
+      <argument>null</argument>
+    </service>
+    <service id="fos_rest.routing.loader.processor" class="FOS\RestBundle\Routing\Loader\RestRouteProcessor" public="false"/>
+    <service id="fos_rest.routing.loader.yaml_collection" class="FOS\RestBundle\Routing\Loader\RestYamlCollectionLoader" public="false">
+      <tag name="routing.loader"/>
+      <argument type="service" id="file_locator"/>
+      <argument type="service" id="fos_rest.routing.loader.processor"/>
+      <argument>true</argument>
+      <argument type="collection">
+        <argument key="json">false</argument>
+        <argument key="xml">false</argument>
+        <argument key="html">true</argument>
+      </argument>
+      <argument>null</argument>
+    </service>
+    <service id="fos_rest.routing.loader.xml_collection" class="FOS\RestBundle\Routing\Loader\RestXmlCollectionLoader" public="false">
+      <tag name="routing.loader"/>
+      <argument type="service" id="file_locator"/>
+      <argument type="service" id="fos_rest.routing.loader.processor"/>
+      <argument>true</argument>
+      <argument type="collection">
+        <argument key="json">false</argument>
+        <argument key="xml">false</argument>
+        <argument key="html">true</argument>
+      </argument>
+      <argument>null</argument>
+    </service>
+    <service id="fos_rest.routing.loader.reader.controller" class="FOS\RestBundle\Routing\Loader\Reader\RestControllerReader" public="false">
+      <argument type="service" id="fos_rest.routing.loader.reader.action"/>
+      <argument type="service" id="annotations.reader"/>
+    </service>
+    <service id="fos_rest.routing.loader.reader.action" class="FOS\RestBundle\Routing\Loader\Reader\RestActionReader" public="false">
+      <argument type="service" id="annotations.reader"/>
+      <argument type="service" id="fos_rest.request.param_fetcher.reader"/>
+      <argument type="service" id="fos_rest.inflector.doctrine"/>
+      <argument>true</argument>
+      <argument type="collection">
+        <argument key="json">false</argument>
+        <argument key="xml">false</argument>
+        <argument key="html">true</argument>
+      </argument>
+      <argument>true</argument>
+    </service>
+    <service id="fos_rest.inflector.doctrine" class="FOS\RestBundle\Inflector\DoctrineInflector" public="false"/>
+    <service id="fos_rest.request.param_fetcher" class="FOS\RestBundle\Request\ParamFetcher">
+      <argument type="service" id="service_container"/>
+      <argument type="service" id="fos_rest.request.param_fetcher.reader"/>
+      <argument type="service" id="request_stack"/>
+      <argument>null</argument>
+    </service>
+    <service id="fos_rest.request.param_fetcher.reader" class="FOS\RestBundle\Request\ParamReader" public="false">
+      <argument type="service" id="annotations.reader"/>
+    </service>
+    <service id="fos_rest.serializer.jms" class="FOS\RestBundle\Serializer\JMSSerializerAdapter" public="false" lazy="true">
+      <argument type="service" id="jms_serializer.serializer"/>
+      <argument type="service" id="jms_serializer.configured_serialization_context_factory"/>
+      <argument type="service" id="jms_serializer.configured_deserialization_context_factory"/>
+    </service>
+    <service id="fos_rest.serializer.symfony" class="FOS\RestBundle\Serializer\SymfonySerializerAdapter" public="false" lazy="true">
+      <argument type="service" id="serializer"/>
+    </service>
+    <service id="fos_rest.serializer.form_error_normalizer" class="FOS\RestBundle\Serializer\Normalizer\FormErrorNormalizer" public="false">
+      <tag name="serializer.normalizer" priority="-10"/>
+    </service>
+    <service id="fos_rest.normalizer.camel_keys" class="FOS\RestBundle\Normalizer\CamelKeysNormalizer"/>
+    <service id="fos_rest.normalizer.camel_keys_with_leading_underscore" class="FOS\RestBundle\Normalizer\CamelKeysNormalizerWithLeadingUnderscore"/>
+    <service id="fos_rest.decoder.json" class="FOS\RestBundle\Decoder\JsonDecoder"/>
+    <service id="fos_rest.decoder.jsontoform" class="FOS\RestBundle\Decoder\JsonToFormDecoder"/>
+    <service id="fos_rest.decoder.xml" class="FOS\RestBundle\Decoder\XmlDecoder"/>
+    <service id="fos_rest.decoder_provider" class="FOS\RestBundle\Decoder\ContainerDecoderProvider">
+      <argument type="service" id=".service_locator.D17UIhL"/>
+      <argument type="collection">
+        <argument key="json">fos_rest.decoder.json</argument>
+      </argument>
+    </service>
+    <service id="fos_rest.body_listener" class="FOS\RestBundle\EventListener\BodyListener">
+      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="10"/>
+      <tag name="container.hot_path"/>
+      <argument type="service" id="fos_rest.decoder_provider"/>
+      <argument>false</argument>
+      <call method="setDefaultFormat">
+        <argument>null</argument>
+      </call>
+    </service>
+    <service id=".service_locator.D17UIhL" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="fos_rest.decoder.json" type="service" id="fos_rest.decoder.json"/>
+      </argument>
+    </service>
+    <service id="jms_serializer.event_dispatcher" class="JMS\Serializer\EventDispatcher\LazyEventDispatcher" public="false">
+      <argument type="service" id=".service_locator..a3fWhj"/>
+      <call method="setListeners">
+        <argument type="collection">
+          <argument key="serializer.pre_serialize" type="collection">
+            <argument type="collection">
+              <argument type="collection">
+                <argument>jms_serializer.doctrine_proxy_subscriber</argument>
+                <argument>onPreSerializeTypedProxy</argument>
+              </argument>
+              <argument>null</argument>
+              <argument>null</argument>
+              <argument>Doctrine\Common\Persistence\Proxy</argument>
+            </argument>
+            <argument type="collection">
+              <argument type="collection">
+                <argument>jms_serializer.doctrine_proxy_subscriber</argument>
+                <argument>onPreSerialize</argument>
+              </argument>
+              <argument>null</argument>
+              <argument>null</argument>
+              <argument>Doctrine\ORM\PersistentCollection</argument>
+            </argument>
+            <argument type="collection">
+              <argument type="collection">
+                <argument>jms_serializer.doctrine_proxy_subscriber</argument>
+                <argument>onPreSerialize</argument>
+              </argument>
+              <argument>null</argument>
+              <argument>null</argument>
+              <argument>Doctrine\ODM\MongoDB\PersistentCollection</argument>
+            </argument>
+            <argument type="collection">
+              <argument type="collection">
+                <argument>jms_serializer.doctrine_proxy_subscriber</argument>
+                <argument>onPreSerialize</argument>
+              </argument>
+              <argument>null</argument>
+              <argument>null</argument>
+              <argument>Doctrine\ODM\PHPCR\PersistentCollection</argument>
+            </argument>
+            <argument type="collection">
+              <argument type="collection">
+                <argument>jms_serializer.doctrine_proxy_subscriber</argument>
+                <argument>onPreSerialize</argument>
+              </argument>
+              <argument>null</argument>
+              <argument>null</argument>
+              <argument>Doctrine\Common\Persistence\Proxy</argument>
+            </argument>
+          </argument>
+        </argument>
+      </call>
+    </service>
+    <service id="jms_serializer.doctrine_proxy_subscriber" class="JMS\Serializer\EventDispatcher\Subscriber\DoctrineProxySubscriber" public="false">
+      <tag name="jms_serializer.event_subscriber"/>
+      <argument>true</argument>
+      <argument>false</argument>
+    </service>
+    <service id="jms_serializer.handler_registry" class="JMS\Serializer\Handler\LazyHandlerRegistry">
+      <argument type="service" id=".service_locator.zfW.ecC"/>
+      <argument type="collection">
+        <argument key="2" type="collection">
+          <argument key="DateTime" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.datetime_handler</argument>
+              <argument>deserializeDateTimeFromjson</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.datetime_handler</argument>
+              <argument>deserializeDateTimeFromxml</argument>
+            </argument>
+          </argument>
+          <argument key="DateTimeImmutable" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.datetime_handler</argument>
+              <argument>deserializeDateTimeImmutableFromjson</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.datetime_handler</argument>
+              <argument>deserializeDateTimeImmutableFromxml</argument>
+            </argument>
+          </argument>
+          <argument key="DateInterval" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.datetime_handler</argument>
+              <argument>deserializeDateIntervalFromjson</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.datetime_handler</argument>
+              <argument>deserializeDateIntervalFromxml</argument>
+            </argument>
+          </argument>
+          <argument key="ArrayCollection" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+            <argument key="yml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+          </argument>
+          <argument key="Doctrine\Common\Collections\ArrayCollection" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+            <argument key="yml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+          </argument>
+          <argument key="Doctrine\ORM\PersistentCollection" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+            <argument key="yml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+          </argument>
+          <argument key="Doctrine\ODM\MongoDB\PersistentCollection" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+            <argument key="yml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+          </argument>
+          <argument key="Doctrine\ODM\PHPCR\PersistentCollection" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+            <argument key="yml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>deserializeCollection</argument>
+            </argument>
+          </argument>
+        </argument>
+        <argument key="1" type="collection">
+          <argument key="DateTime" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.datetime_handler</argument>
+              <argument>serializeDateTime</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.datetime_handler</argument>
+              <argument>serializeDateTime</argument>
+            </argument>
+          </argument>
+          <argument key="DateTimeImmutable" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.datetime_handler</argument>
+              <argument>serializeDateTimeImmutable</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.datetime_handler</argument>
+              <argument>serializeDateTimeImmutable</argument>
+            </argument>
+          </argument>
+          <argument key="DateInterval" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.datetime_handler</argument>
+              <argument>serializeDateInterval</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.datetime_handler</argument>
+              <argument>serializeDateInterval</argument>
+            </argument>
+          </argument>
+          <argument key="ArrayCollection" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+            <argument key="yml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+          </argument>
+          <argument key="Doctrine\Common\Collections\ArrayCollection" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+            <argument key="yml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+          </argument>
+          <argument key="Doctrine\ORM\PersistentCollection" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+            <argument key="yml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+          </argument>
+          <argument key="Doctrine\ODM\MongoDB\PersistentCollection" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+            <argument key="yml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+          </argument>
+          <argument key="Doctrine\ODM\PHPCR\PersistentCollection" type="collection">
+            <argument key="json" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+            <argument key="yml" type="collection">
+              <argument>jms_serializer.array_collection_handler</argument>
+              <argument>serializeCollection</argument>
+            </argument>
+          </argument>
+          <argument key="Symfony\Component\Validator\ConstraintViolationList" type="collection">
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.constraint_violation_handler</argument>
+              <argument>serializeListToxml</argument>
+            </argument>
+            <argument key="json" type="collection">
+              <argument>jms_serializer.constraint_violation_handler</argument>
+              <argument>serializeListTojson</argument>
+            </argument>
+          </argument>
+          <argument key="Symfony\Component\Validator\ConstraintViolation" type="collection">
+            <argument key="xml" type="collection">
+              <argument>jms_serializer.constraint_violation_handler</argument>
+              <argument>serializeViolationToxml</argument>
+            </argument>
+            <argument key="json" type="collection">
+              <argument>jms_serializer.constraint_violation_handler</argument>
+              <argument>serializeViolationTojson</argument>
+            </argument>
+          </argument>
+          <argument key="Symfony\Component\Form\Form" type="collection">
+            <argument key="xml" type="collection">
+              <argument>fos_rest.serializer.form_error_handler</argument>
+              <argument>serializeFormToxml</argument>
+            </argument>
+            <argument key="json" type="collection">
+              <argument>fos_rest.serializer.form_error_handler</argument>
+              <argument>serializeFormTojson</argument>
+            </argument>
+          </argument>
+          <argument key="Symfony\Component\Form\FormError" type="collection">
+            <argument key="xml" type="collection">
+              <argument>fos_rest.serializer.form_error_handler</argument>
+              <argument>serializeFormErrorToxml</argument>
+            </argument>
+            <argument key="json" type="collection">
+              <argument>fos_rest.serializer.form_error_handler</argument>
+              <argument>serializeFormErrorTojson</argument>
+            </argument>
+          </argument>
+        </argument>
+      </argument>
+    </service>
+    <service id="jms_serializer.datetime_handler" class="JMS\Serializer\Handler\DateHandler" public="false">
+      <tag name="jms_serializer.subscribing_handler"/>
+      <argument>Y-m-d\TH:i:sP</argument>
+      <argument>Europe/Helsinki</argument>
+      <argument>true</argument>
+    </service>
+    <service id="jms_serializer.array_collection_handler" class="JMS\Serializer\Handler\ArrayCollectionHandler" public="false">
+      <tag name="jms_serializer.subscribing_handler"/>
+      <argument>false</argument>
+    </service>
+    <service id="jms_serializer.constraint_violation_handler" class="JMS\Serializer\Handler\ConstraintViolationHandler" public="false">
+      <tag name="jms_serializer.subscribing_handler"/>
+    </service>
+    <service id="jms_serializer.type_parser" class="JMS\Serializer\Type\Parser" public="false"/>
+    <service id="jms_serializer.metadata.file_locator" class="Metadata\Driver\FileLocator" public="false">
+      <argument type="collection"/>
+    </service>
+    <service id="jms_serializer.metadata.yaml_driver" class="JMS\Serializer\Metadata\Driver\YamlDriver" public="false">
+      <argument type="service" id="jms_serializer.metadata.file_locator"/>
+      <argument type="service" id="jms_serializer.serialized_name_annotation_strategy"/>
+      <argument type="service" id="jms_serializer.type_parser" on-invalid="null"/>
+    </service>
+    <service id="jms_serializer.metadata.xml_driver" class="JMS\Serializer\Metadata\Driver\XmlDriver" public="false">
+      <argument type="service" id="jms_serializer.metadata.file_locator"/>
+      <argument type="service" id="jms_serializer.serialized_name_annotation_strategy"/>
+      <argument type="service" id="jms_serializer.type_parser" on-invalid="null"/>
+    </service>
+    <service id="jms_serializer.metadata.annotation_driver" class="JMS\Serializer\Metadata\Driver\AnnotationDriver" public="false">
+      <argument type="service" id="annotations.reader"/>
+      <argument type="service" id="jms_serializer.serialized_name_annotation_strategy"/>
+      <argument type="service" id="jms_serializer.type_parser" on-invalid="null"/>
+    </service>
+    <service id="jms_serializer.metadata.chain_driver" class="Metadata\Driver\DriverChain" public="false">
+      <argument type="collection">
+        <argument type="service" id="jms_serializer.metadata.yaml_driver"/>
+        <argument type="service" id="jms_serializer.metadata.xml_driver"/>
+        <argument type="service" id="jms_serializer.metadata.annotation_driver"/>
+      </argument>
+    </service>
+    <service id="jms_serializer.metadata.doctrine_type_driver" class="JMS\Serializer\Metadata\Driver\DoctrineTypeDriver" public="false">
+      <argument type="service" id="jms_serializer.metadata.chain_driver"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="jms_serializer.metadata.doctrine_phpcr_type_driver" class="JMS\Serializer\Metadata\Driver\DoctrinePHPCRTypeDrive" public="false">
+      <argument type="service" id="jms_serializer.metadata.chain_driver"/>
+      <argument type="service" id="doctrine_phpcr"/>
+    </service>
+    <service id="jms_serializer.metadata.lazy_loading_driver" class="Metadata\Driver\LazyLoadingDriver" public="false">
+      <argument type="service" id="service_container"/>
+      <argument>jms_serializer.metadata_driver</argument>
+    </service>
+    <service id="jms_serializer.metadata.cache.file_cache" class="Metadata\Cache\FileCache" public="false">
+      <argument>/home/uh/mine/projects/php/tests/another/auth-service/var/cache/dev/jms_serializer</argument>
+    </service>
+    <service id="jms_serializer.metadata_factory" class="Metadata\MetadataFactory" public="false">
+      <argument type="service" id="jms_serializer.metadata.lazy_loading_driver"/>
+      <argument>Metadata\ClassHierarchyMetadata</argument>
+      <argument>true</argument>
+      <call method="setCache">
+        <argument type="service" id="jms_serializer.metadata.cache.file_cache" on-invalid="ignore"/>
+      </call>
+    </service>
+    <service id="jms_serializer.version_exclusion_strategy" class="JMS\Serializer\Exclusion\VersionExclusionStrategy" public="false" abstract="true"/>
+    <service id="jms_serializer.camel_case_naming_strategy" class="JMS\Serializer\Naming\CamelCaseNamingStrategy" public="false">
+      <argument>_</argument>
+      <argument>true</argument>
+    </service>
+    <service id="jms_serializer.identical_property_naming_strategy" class="JMS\Serializer\Naming\IdenticalPropertyNamingStrategy" public="false"/>
+    <service id="jms_serializer.serialized_name_annotation_strategy" class="JMS\Serializer\Naming\SerializedNameAnnotationStrategy" public="false">
+      <argument type="service" id="jms_serializer.camel_case_naming_strategy"/>
+    </service>
+    <service id="jms_serializer.doctrine_object_constructor" class="JMS\Serializer\Construction\DoctrineObjectConstructor" public="false">
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="jms_serializer.unserialize_object_constructor"/>
+      <argument type="string">null</argument>
+    </service>
+    <service id="jms_serializer.doctrine_phpcr_object_constructor" class="JMS\Serializer\Construction\DoctrineObjectConstructor" public="false">
+      <argument type="service" id="doctrine_phpcr"/>
+      <argument type="service" id="jms_serializer.unserialize_object_constructor"/>
+    </service>
+    <service id="jms_serializer.unserialize_object_constructor" class="JMS\Serializer\Construction\UnserializeObjectConstructor" public="false"/>
+    <service id="jms_serializer.serializer" class="JMS\Serializer\Serializer" public="false">
+      <argument type="service" id="jms_serializer.metadata_factory"/>
+      <argument type="collection">
+        <argument key="2" type="service" id="jms_serializer.deserialization_graph_navigator_factory"/>
+        <argument key="1" type="service" id="jms_serializer.serialization_graph_navigator_factory"/>
+      </argument>
+      <argument type="collection">
+        <argument key="json" type="service" id="jms_serializer.json_serialization_visitor"/>
+        <argument key="xml" type="service" id="jms_serializer.xml_serialization_visitor"/>
+      </argument>
+      <argument type="collection">
+        <argument key="json" type="service" id="jms_serializer.json_deserialization_visitor"/>
+        <argument key="xml" type="service" id="jms_serializer.xml_deserialization_visitor"/>
+      </argument>
+      <argument type="service" id="jms_serializer.configured_serialization_context_factory"/>
+      <argument type="service" id="jms_serializer.configured_deserialization_context_factory"/>
+      <argument type="service" id="jms_serializer.type_parser" on-invalid="null"/>
+    </service>
+    <service id="jms_serializer.deserialization_graph_navigator_factory" class="JMS\Serializer\GraphNavigator\Factory\DeserializationGraphNavigatorFactory" public="false">
+      <argument type="service" id="jms_serializer.metadata_factory"/>
+      <argument type="service" id="jms_serializer.handler_registry"/>
+      <argument type="service" id="jms_serializer.unserialize_object_constructor"/>
+      <argument type="service" id="jms_serializer.accessor_strategy.default"/>
+      <argument type="service" id="jms_serializer.event_dispatcher"/>
+      <argument>null</argument>
+    </service>
+    <service id="jms_serializer.serialization_graph_navigator_factory" class="JMS\Serializer\GraphNavigator\Factory\SerializationGraphNavigatorFactory" public="false">
+      <argument type="service" id="jms_serializer.metadata_factory"/>
+      <argument type="service" id="jms_serializer.handler_registry"/>
+      <argument type="service" id="jms_serializer.accessor_strategy.default"/>
+      <argument type="service" id="jms_serializer.event_dispatcher"/>
+      <argument>null</argument>
+    </service>
+    <service id="jms_serializer.expression_language" class="Symfony\Component\ExpressionLanguage\ExpressionLanguage" public="false">
+      <call method="registerProvider">
+        <argument type="service" id="jms_serializer.expression_language.function_provider"/>
+      </call>
+    </service>
+    <service id="jms_serializer.expression_language.function_provider" class="JMS\SerializerBundle\ExpressionLanguage\BasicSerializerFunctionsProvider" public="false">
+      <tag name="jms.expression.function_provider"/>
+    </service>
+    <service id="jms_serializer.twig_extension.serializer" class="JMS\Serializer\Twig\SerializerExtension" public="false">
+      <tag name="twig.extension"/>
+      <argument type="service" id="jms_serializer.serializer"/>
+    </service>
+    <service id="jms_serializer.templating.helper.serializer" class="JMS\SerializerBundle\Templating\SerializerHelper">
+      <tag name="templating.helper" alias="jms_serializer"/>
+      <argument type="service" id="jms_serializer.serializer"/>
+    </service>
+    <service id="jms_serializer.accessor_strategy.default" class="JMS\Serializer\Accessor\DefaultAccessorStrategy" public="false"/>
+    <service id="jms_serializer.json_serialization_visitor" class="JMS\Serializer\Visitor\Factory\JsonSerializationVisitorFactory" public="false">
+      <tag name="jms_serializer.serialization_visitor" format="json"/>
+      <call method="setOptions">
+        <argument>1216</argument>
+      </call>
+    </service>
+    <service id="jms_serializer.json_deserialization_visitor" class="JMS\Serializer\Visitor\Factory\JsonDeserializationVisitorFactory" public="false">
+      <tag name="jms_serializer.deserialization_visitor" format="json"/>
+    </service>
+    <service id="jms_serializer.xml_serialization_visitor" class="JMS\Serializer\Visitor\Factory\XmlSerializationVisitorFactory" public="false">
+      <tag name="jms_serializer.serialization_visitor" format="xml"/>
+      <call method="setFormatOutput">
+        <argument>true</argument>
+      </call>
+    </service>
+    <service id="jms_serializer.xml_deserialization_visitor" class="JMS\Serializer\Visitor\Factory\XmlDeserializationVisitorFactory" public="false">
+      <tag name="jms_serializer.deserialization_visitor" format="xml"/>
+    </service>
+    <service id="jms_serializer.configured_serialization_context_factory" class="JMS\SerializerBundle\ContextFactory\ConfiguredContextFactory" public="false"/>
+    <service id="jms_serializer.configured_deserialization_context_factory" class="JMS\SerializerBundle\ContextFactory\ConfiguredContextFactory" public="false"/>
+    <service id="security.authorization_checker" class="Symfony\Component\Security\Core\Authorization\AuthorizationChecker" public="true">
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument type="service" id="debug.security.access.decision_manager"/>
+      <argument>false</argument>
+    </service>
+    <service id="security.token_storage" class="Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage" public="true">
+      <tag name="kernel.reset" method="setToken"/>
+    </service>
+    <service id="security.helper" class="Symfony\Component\Security\Core\Security" public="false">
+      <argument type="service" id=".service_locator.jD4_ZG7"/>
+    </service>
+    <service id="security.user_value_resolver" class="Symfony\Component\Security\Http\Controller\UserValueResolver" public="false">
+      <tag name="controller.argument_value_resolver" priority="40"/>
+      <argument type="service" id="security.token_storage"/>
+    </service>
+    <service id="security.authentication.manager" class="Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager" public="false">
+      <argument type="iterator">
+        <argument type="service" id="security.authentication.provider.anonymous.main"/>
+      </argument>
+      <argument>true</argument>
+      <call method="setEventDispatcher">
+        <argument type="service" id="event_dispatcher"/>
+      </call>
+    </service>
+    <service id="security.authentication.trust_resolver" class="Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver" public="false">
+      <argument>null</argument>
+      <argument>null</argument>
+    </service>
+    <service id="security.authentication.session_strategy" class="Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy" public="false">
+      <argument>migrate</argument>
+    </service>
+    <service id="security.authentication.session_strategy_noop" class="Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy" public="false">
+      <argument>none</argument>
+    </service>
+    <service id="security.encoder_factory.generic" class="Symfony\Component\Security\Core\Encoder\EncoderFactory" public="false">
+      <argument type="collection"/>
+    </service>
+    <service id="security.user_password_encoder.generic" class="Symfony\Component\Security\Core\Encoder\UserPasswordEncoder" public="false">
+      <argument type="service" id="security.encoder_factory.generic"/>
+    </service>
+    <service id="security.user_checker" class="Symfony\Component\Security\Core\User\UserChecker" public="false"/>
+    <service id="security.authentication_utils" class="Symfony\Component\Security\Http\Authentication\AuthenticationUtils" public="true">
+      <argument type="service" id="request_stack"/>
+    </service>
+    <service id="security.role_hierarchy" class="Symfony\Component\Security\Core\Role\RoleHierarchy" public="false">
+      <argument type="collection"/>
+    </service>
+    <service id="security.access.simple_role_voter" class="Symfony\Component\Security\Core\Authorization\Voter\RoleVoter" public="false">
+      <tag name="security.voter" priority="245"/>
+    </service>
+    <service id="security.access.authenticated_voter" class="Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter" public="false">
+      <tag name="security.voter" priority="250"/>
+      <argument type="service" id="security.authentication.trust_resolver"/>
+    </service>
+    <service id="security.firewall.map" class="Symfony\Bundle\SecurityBundle\Security\FirewallMap" public="false">
+      <argument type="service" id=".service_locator.ko2dQVn"/>
+      <argument type="iterator">
+        <argument key="security.firewall.map.context.dev" type="service" id=".security.request_matcher.Iy.T22O"/>
+        <argument key="security.firewall.map.context.main">null</argument>
+      </argument>
+    </service>
+    <service id="security.firewall.context" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext" public="false" abstract="true">
+      <argument type="collection"/>
+      <argument type="service" id="security.exception_listener"/>
+      <argument></argument>
+      <argument></argument>
+    </service>
+    <service id="security.firewall.config" class="Symfony\Bundle\SecurityBundle\Security\FirewallConfig" public="false" abstract="true">
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument type="collection"/>
+      <argument></argument>
+    </service>
+    <service id="security.logout_url_generator" class="Symfony\Component\Security\Http\Logout\LogoutUrlGenerator" public="false">
+      <argument type="service" id="request_stack" on-invalid="null"/>
+      <argument type="service" id="router.default" on-invalid="null"/>
+      <argument type="service" id="security.token_storage" on-invalid="null"/>
+    </service>
+    <service id="security.user.provider.missing" class="Symfony\Component\Security\Core\User\MissingUserProvider" public="false" abstract="true">
+      <argument></argument>
+    </service>
+    <service id="security.user.provider.in_memory" class="Symfony\Component\Security\Core\User\InMemoryUserProvider" public="false" abstract="true"/>
+    <service id="security.user.provider.in_memory.user" class="Symfony\Component\Security\Core\User\User" public="false" abstract="true">
+      <deprecated>The "%service_id%" service is deprecated since Symfony 4.1.</deprecated>
+    </service>
+    <service id="security.user.provider.ldap" class="Symfony\Component\Security\Core\User\LdapUserProvider" public="false" abstract="true">
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+    </service>
+    <service id="security.user.provider.chain" class="Symfony\Component\Security\Core\User\ChainUserProvider" public="false" abstract="true"/>
+    <service id="security.http_utils" class="Symfony\Component\Security\Http\HttpUtils" public="false">
+      <argument type="service" id="router.default" on-invalid="null"/>
+      <argument type="service" id="router.default" on-invalid="null"/>
+      <argument>{^https?://%s$}i</argument>
+      <argument>{^https://%s$}i</argument>
+    </service>
+    <service id="security.validator.user_password" class="Symfony\Component\Security\Core\Validator\Constraints\UserPasswordValidator" public="false">
+      <tag name="validator.constraint_validator" alias="security.validator.user_password"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.encoder_factory.generic"/>
+    </service>
+    <service id="cache.security_expression_language" class="Symfony\Component\Cache\Adapter\AdapterInterface" public="false">
+      <tag name="cache.pool"/>
+      <argument>UQqR+cz5r9</argument>
+      <argument>0</argument>
+      <argument>%container.build_id%</argument>
+      <argument>/home/uh/mine/projects/php/tests/another/auth-service/var/cache/dev/pools</argument>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
+    </service>
+    <service id="security.authentication.listener.anonymous" class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument></argument>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument type="service" id="security.authentication.manager"/>
+    </service>
+    <service id="security.authentication.provider.anonymous" class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
+      <argument></argument>
+    </service>
+    <service id="security.authentication.retry_entry_point" class="Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint" public="false">
+      <argument>80</argument>
+      <argument>443</argument>
+    </service>
+    <service id="security.authentication.basic_entry_point" class="Symfony\Component\Security\Http\EntryPoint\BasicAuthenticationEntryPoint" public="false"/>
+    <service id="security.channel_listener" class="Symfony\Component\Security\Http\Firewall\ChannelListener" public="false">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.access_map"/>
+      <argument type="service" id="security.authentication.retry_entry_point"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+    </service>
+    <service id="security.access_map" class="Symfony\Component\Security\Http\AccessMap" public="false"/>
+    <service id="security.context_listener" class="Symfony\Component\Security\Http\Firewall\ContextListener" public="false">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="iterator">
+        <argument type="service" id="security.user.provider.concrete.in_memory"/>
+      </argument>
+      <argument></argument>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument type="service" id="event_dispatcher" on-invalid="null"/>
+      <argument type="service" id="security.authentication.trust_resolver"/>
+    </service>
+    <service id="security.logout_listener" class="Symfony\Component\Security\Http\Firewall\LogoutListener" public="false" abstract="true">
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument type="service" id="security.logout.success_handler"/>
+      <argument></argument>
+      <call method="addHandler">
+        <argument type="service" id="security.logout.handler.csrf_token_clearing"/>
+      </call>
+    </service>
+    <service id="security.logout.handler.session" class="Symfony\Component\Security\Http\Logout\SessionLogoutHandler" public="false"/>
+    <service id="security.logout.handler.cookie_clearing" class="Symfony\Component\Security\Http\Logout\CookieClearingLogoutHandler" public="false" abstract="true"/>
+    <service id="security.logout.success_handler" class="Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler" public="false" abstract="true">
+      <argument type="service" id="security.http_utils"/>
+      <argument>/</argument>
+    </service>
+    <service id="security.authentication.form_entry_point" class="Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint" public="false" abstract="true">
+      <argument type="service" id="http_kernel"/>
+    </service>
+    <service id="security.authentication.listener.abstract" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument type="service" id="security.authentication.session_strategy"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument></argument>
+      <argument type="service" id="security.authentication.success_handler"/>
+      <argument type="service" id="security.authentication.failure_handler"/>
+      <argument type="collection"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument type="service" id="event_dispatcher" on-invalid="null"/>
+    </service>
+    <service id="security.authentication.custom_success_handler" class="Symfony\Component\Security\Http\Authentication\CustomAuthenticationSuccessHandler" public="false" abstract="true">
+      <argument></argument>
+      <argument type="collection"/>
+      <argument></argument>
+    </service>
+    <service id="security.authentication.success_handler" class="Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler" public="false" abstract="true">
+      <argument type="service" id="security.http_utils"/>
+      <argument type="collection"/>
+    </service>
+    <service id="security.authentication.custom_failure_handler" class="Symfony\Component\Security\Http\Authentication\CustomAuthenticationFailureHandler" public="false" abstract="true">
+      <argument></argument>
+      <argument type="collection"/>
+    </service>
+    <service id="security.authentication.failure_handler" class="Symfony\Component\Security\Http\Authentication\DefaultAuthenticationFailureHandler" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="http_kernel"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument type="collection"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+    </service>
+    <service id="security.authentication.listener.form" class="Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener" public="false" abstract="true">
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument type="service" id="security.authentication.session_strategy"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument></argument>
+      <argument type="service" id="security.authentication.success_handler"/>
+      <argument type="service" id="security.authentication.failure_handler"/>
+      <argument type="collection"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument type="service" id="event_dispatcher" on-invalid="null"/>
+    </service>
+    <service id="security.authentication.listener.simple_form" class="Symfony\Component\Security\Http\Firewall\SimpleFormAuthenticationListener" public="false" abstract="true">
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument type="service" id="security.authentication.session_strategy"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument></argument>
+      <argument type="service" id="security.authentication.success_handler"/>
+      <argument type="service" id="security.authentication.failure_handler"/>
+      <argument type="collection"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument type="service" id="event_dispatcher" on-invalid="null"/>
+      <deprecated>The "%service_id%" service is deprecated since Symfony 4.2.</deprecated>
+    </service>
+    <service id="security.authentication.simple_success_failure_handler" class="Symfony\Component\Security\Http\Authentication\SimpleAuthenticationHandler" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument></argument>
+      <argument type="service" id="security.authentication.success_handler"/>
+      <argument type="service" id="security.authentication.failure_handler"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <deprecated>The "%service_id%" service is deprecated since Symfony 4.2.</deprecated>
+    </service>
+    <service id="security.authentication.listener.simple_preauth" class="Symfony\Component\Security\Http\Firewall\SimplePreAuthenticationListener" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument></argument>
+      <argument></argument>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument type="service" id="event_dispatcher" on-invalid="null"/>
+      <argument type="service" id="security.authentication.trust_resolver"/>
+      <deprecated>The "%service_id%" service is deprecated since Symfony 4.2.</deprecated>
+    </service>
+    <service id="security.authentication.listener.x509" class="Symfony\Component\Security\Http\Firewall\X509AuthenticationListener" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument type="service" id="event_dispatcher" on-invalid="null"/>
+    </service>
+    <service id="security.authentication.listener.json" class="Symfony\Component\Security\Http\Firewall\UsernamePasswordJsonAuthenticationListener" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument type="collection"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument type="service" id="event_dispatcher" on-invalid="null"/>
+      <argument type="service" id="property_accessor" on-invalid="null"/>
+    </service>
+    <service id="security.authentication.listener.remote_user" class="Symfony\Component\Security\Http\Firewall\RemoteUserAuthenticationListener" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument></argument>
+      <argument></argument>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument type="service" id="event_dispatcher" on-invalid="null"/>
+    </service>
+    <service id="security.authentication.listener.basic" class="Symfony\Component\Security\Http\Firewall\BasicAuthenticationListener" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument></argument>
+      <argument></argument>
+      <argument type="service" id="logger" on-invalid="null"/>
+    </service>
+    <service id="security.authentication.provider.dao" class="Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider" public="false" abstract="true">
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument type="service" id="security.encoder_factory.generic"/>
+      <argument>true</argument>
+    </service>
+    <service id="security.authentication.provider.ldap_bind" class="Symfony\Component\Security\Core\Authentication\Provider\LdapBindAuthenticationProvider" public="false" abstract="true">
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument>true</argument>
+    </service>
+    <service id="security.authentication.provider.simple" class="Symfony\Component\Security\Core\Authentication\Provider\SimpleAuthenticationProvider" public="false" abstract="true">
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument>null</argument>
+      <deprecated>The "%service_id%" service is deprecated since Symfony 4.2.</deprecated>
+    </service>
+    <service id="security.authentication.provider.pre_authenticated" class="Symfony\Component\Security\Core\Authentication\Provider\PreAuthenticatedAuthenticationProvider" public="false" abstract="true">
+      <argument></argument>
+      <argument></argument>
+    </service>
+    <service id="security.exception_listener" class="Symfony\Component\Security\Http\Firewall\ExceptionListener" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.trust_resolver"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument></argument>
+      <argument type="service" id="security.authentication.entry_point" on-invalid="null"/>
+      <argument>null</argument>
+      <argument type="service" id="security.access.denied_handler" on-invalid="null"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument>false</argument>
+    </service>
+    <service id="security.authentication.switchuser_listener" class="Symfony\Component\Security\Http\Firewall\SwitchUserListener" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument type="service" id="debug.security.access.decision_manager"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument>_switch_user</argument>
+      <argument>ROLE_ALLOWED_TO_SWITCH</argument>
+      <argument type="service" id="event_dispatcher" on-invalid="null"/>
+      <argument>false</argument>
+    </service>
+    <service id="security.access_listener" class="Symfony\Component\Security\Http\Firewall\AccessListener" public="false">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="debug.security.access.decision_manager"/>
+      <argument type="service" id="security.access_map"/>
+      <argument type="service" id="security.authentication.manager"/>
+    </service>
+    <service id="security.authentication.listener.rememberme" class="Symfony\Component\Security\Http\Firewall\RememberMeListener" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.rememberme"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument type="service" id="event_dispatcher" on-invalid="null"/>
+      <argument></argument>
+      <argument type="service" id="security.authentication.session_strategy"/>
+    </service>
+    <service id="security.authentication.provider.rememberme" class="Symfony\Component\Security\Core\Authentication\Provider\RememberMeAuthenticationProvider" public="false" abstract="true">
+      <argument></argument>
+    </service>
+    <service id="security.rememberme.token.provider.in_memory" class="Symfony\Component\Security\Core\Authentication\RememberMe\InMemoryTokenProvider" public="false"/>
+    <service id="security.authentication.rememberme.services.abstract" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="collection"/>
+      <argument></argument>
+      <argument></argument>
+      <argument type="collection"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+    </service>
+    <service id="security.authentication.rememberme.services.persistent" class="Symfony\Component\Security\Http\RememberMe\PersistentTokenBasedRememberMeServices" public="false" abstract="true">
+      <argument type="collection"/>
+      <argument></argument>
+      <argument></argument>
+      <argument type="collection"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+    </service>
+    <service id="security.authentication.rememberme.services.simplehash" class="Symfony\Component\Security\Http\RememberMe\TokenBasedRememberMeServices" public="false" abstract="true">
+      <argument type="collection"/>
+      <argument></argument>
+      <argument></argument>
+      <argument type="collection"/>
+      <argument type="service" id="logger" on-invalid="null"/>
+    </service>
+    <service id="security.rememberme.response_listener" class="Symfony\Component\Security\Http\RememberMe\ResponseListener" public="false">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+    </service>
+    <service id="templating.helper.logout_url" class="Symfony\Bundle\SecurityBundle\Templating\Helper\LogoutUrlHelper" public="false">
+      <tag name="templating.helper" alias="logout_url"/>
+      <argument type="service" id="security.logout_url_generator"/>
+    </service>
+    <service id="templating.helper.security" class="Symfony\Bundle\SecurityBundle\Templating\Helper\SecurityHelper" public="false">
+      <tag name="templating.helper" alias="security"/>
+      <argument type="service" id="security.authorization_checker" on-invalid="ignore"/>
+    </service>
+    <service id="twig.extension.logout_url" class="Symfony\Bridge\Twig\Extension\LogoutUrlExtension" public="false">
+      <tag name="twig.extension"/>
+      <argument type="service" id="security.logout_url_generator"/>
+    </service>
+    <service id="twig.extension.security" class="Symfony\Bridge\Twig\Extension\SecurityExtension" public="false">
+      <tag name="twig.extension"/>
+      <argument type="service" id="security.authorization_checker" on-invalid="ignore"/>
+    </service>
+    <service id="data_collector.security" class="Symfony\Bundle\SecurityBundle\DataCollector\SecurityDataCollector" public="false">
+      <tag name="data_collector" template="@Security/Collector/security.html.twig" id="security" priority="270"/>
+      <argument type="service" id="security.token_storage" on-invalid="ignore"/>
+      <argument type="service" id="security.role_hierarchy"/>
+      <argument type="service" id="security.logout_url_generator"/>
+      <argument type="service" id="debug.security.access.decision_manager"/>
+      <argument type="service" id="security.firewall.map"/>
+      <argument type="service" id="debug.security.firewall" on-invalid="null"/>
+    </service>
+    <service id="security.authentication.guard_handler" class="Symfony\Component\Security\Guard\GuardAuthenticatorHandler" public="false">
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="event_dispatcher" on-invalid="null"/>
+      <argument type="collection"/>
+      <call method="setSessionAuthenticationStrategy">
+        <argument type="service" id="security.authentication.session_strategy"/>
+      </call>
+    </service>
+    <service id="security.authentication.provider.guard" class="Symfony\Component\Security\Guard\Provider\GuardAuthenticationProvider" public="false" abstract="true">
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+    </service>
+    <service id="security.authentication.listener.guard" class="Symfony\Component\Security\Guard\Firewall\GuardAuthenticationListener" public="false" abstract="true">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="security.authentication.guard_handler"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument></argument>
+      <argument></argument>
+      <argument type="service" id="logger" on-invalid="null"/>
+    </service>
+    <service id="debug.security.access.decision_manager" class="Symfony\Component\Security\Core\Authorization\TraceableAccessDecisionManager" public="false">
+      <argument type="service" id="debug.security.access.decision_manager.inner"/>
+    </service>
+    <service id="debug.security.voter.vote_listener" class="Symfony\Bundle\SecurityBundle\EventListener\VoteListener" public="false">
+      <tag name="kernel.event_subscriber"/>
+      <argument type="service" id="debug.security.access.decision_manager"/>
+    </service>
+    <service id="debug.security.firewall" class="Symfony\Bundle\SecurityBundle\Debug\TraceableFirewallListener" public="false">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="container.hot_path"/>
+      <tag name="container.hot_path"/>
+      <argument type="service" id="security.firewall.map"/>
+      <argument type="service" id="event_dispatcher"/>
+      <argument type="service" id="security.logout_url_generator"/>
+    </service>
+    <service id="security.user.provider.concrete.in_memory" class="Symfony\Component\Security\Core\User\InMemoryUserProvider" public="false">
+      <argument type="collection"/>
+    </service>
+    <service id="security.firewall.map.config.dev" class="Symfony\Bundle\SecurityBundle\Security\FirewallConfig" public="false">
+      <argument>dev</argument>
+      <argument>security.user_checker</argument>
+      <argument>.security.request_matcher.Iy.T22O</argument>
+      <argument>false</argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument></argument>
+      <argument type="collection"/>
+      <argument></argument>
+    </service>
+    <service id=".security.request_matcher.Iy.T22O" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+      <argument>^/(_(profiler|wdt)|css|images|js)/</argument>
+    </service>
+    <service id="security.firewall.map.context.dev" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext" public="false">
+      <argument type="iterator"/>
+      <argument>null</argument>
+      <argument>null</argument>
+      <argument type="service" id="security.firewall.map.config.dev"/>
+    </service>
+    <service id="security.firewall.map.config.main" class="Symfony\Bundle\SecurityBundle\Security\FirewallConfig" public="false">
+      <argument>main</argument>
+      <argument>security.user_checker</argument>
+      <argument>null</argument>
+      <argument>true</argument>
+      <argument>false</argument>
+      <argument>security.user.provider.concrete.in_memory</argument>
+      <argument>main</argument>
+      <argument>null</argument>
+      <argument>null</argument>
+      <argument>null</argument>
+      <argument type="collection">
+        <argument>anonymous</argument>
+      </argument>
+      <argument>null</argument>
+    </service>
+    <service id="security.context_listener.0" class="Symfony\Component\Security\Http\Firewall\ContextListener" public="false">
+      <argument type="service" id="security.token_storage"/>
+      <argument type="iterator">
+        <argument type="service" id="security.user.provider.concrete.in_memory"/>
+      </argument>
+      <argument>main</argument>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument type="service" id="event_dispatcher" on-invalid="null"/>
+      <argument type="service" id="security.authentication.trust_resolver"/>
+    </service>
+    <service id="security.authentication.listener.anonymous.main" class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
+      <argument type="service" id="security.token_storage"/>
+      <argument>%container.build_hash%</argument>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument type="service" id="security.authentication.manager"/>
+    </service>
+    <service id="security.authentication.provider.anonymous.main" class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
+      <argument>%container.build_hash%</argument>
+    </service>
+    <service id="security.exception_listener.main" class="Symfony\Component\Security\Http\Firewall\ExceptionListener" public="false">
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.trust_resolver"/>
+      <argument type="service" id="security.http_utils"/>
+      <argument>main</argument>
+      <argument>null</argument>
+      <argument>null</argument>
+      <argument>null</argument>
+      <argument type="service" id="logger" on-invalid="null"/>
+      <argument>false</argument>
+    </service>
+    <service id="security.firewall.map.context.main" class="Symfony\Bundle\SecurityBundle\Security\FirewallContext" public="false">
+      <argument type="iterator">
+        <argument type="service" id="security.channel_listener"/>
+        <argument type="service" id="security.context_listener.0"/>
+        <argument type="service" id="security.authentication.listener.anonymous.main"/>
+        <argument type="service" id="security.access_listener"/>
+      </argument>
+      <argument type="service" id="security.exception_listener.main"/>
+      <argument>null</argument>
+      <argument type="service" id="security.firewall.map.config.main"/>
+    </service>
+    <service id=".service_locator.ko2dQVn" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="security.firewall.map.context.dev" type="service" id="security.firewall.map.context.dev"/>
+        <argument key="security.firewall.map.context.main" type="service" id="security.firewall.map.context.main"/>
+      </argument>
+    </service>
+    <service id="security.command.user_password_encoder" class="Symfony\Bundle\SecurityBundle\Command\UserPasswordEncoderCommand" public="false">
+      <tag name="console.command" command="security:encode-password"/>
+      <argument type="service" id="security.encoder_factory.generic"/>
+      <argument type="collection"/>
+      <call method="setName">
+        <argument>security:encode-password</argument>
+      </call>
+    </service>
+    <service id="lexik_jwt_authentication.check_config_command" class="Lexik\Bundle\JWTAuthenticationBundle\Command\CheckConfigCommand" public="true">
+      <tag name="console.command" command="lexik:jwt:check-config"/>
+      <argument type="service" id="lexik_jwt_authentication.key_loader.raw"/>
+      <argument>RS256</argument>
+      <call method="setName">
+        <argument>lexik:jwt:check-config</argument>
+      </call>
+    </service>
+    <service id="lexik_jwt_authentication.generate_token_command" class="Lexik\Bundle\JWTAuthenticationBundle\Command\GenerateTokenCommand" public="true">
+      <tag name="console.command" command="lexik:jwt:generate-token"/>
+      <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
+      <argument type="iterator">
+        <argument type="service" id="security.user.provider.concrete.in_memory"/>
+      </argument>
+      <call method="setName">
+        <argument>lexik:jwt:generate-token</argument>
+      </call>
+    </service>
+    <service id="lexik_jwt_authentication.security.authentication.provider" class="Lexik\Bundle\JWTAuthenticationBundle\Security\Authentication\Provider\JWTProvider" public="false">
+      <argument></argument>
+      <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
+      <argument type="service" id="event_dispatcher"/>
+      <argument>username</argument>
+      <call method="setUserIdentityField">
+        <argument>username</argument>
+      </call>
+      <deprecated>The "%service_id%" service is deprecated since LexikJWTAuthenticationBundle version 2.0 and will be removed in 3.0</deprecated>
+    </service>
+    <service id="lexik_jwt_authentication.security.authentication.listener" class="Lexik\Bundle\JWTAuthenticationBundle\Security\Firewall\JWTListener" public="false">
+      <argument type="service" id="security.token_storage"/>
+      <argument type="service" id="security.authentication.manager"/>
+      <argument></argument>
+      <call method="setDispatcher">
+        <argument type="service" id="event_dispatcher"/>
+      </call>
+      <deprecated>The "%service_id%" service is deprecated since LexikJWTAuthenticationBundle version 2.0 and will be removed in 3.0</deprecated>
+    </service>
+    <service id="lexik_jwt_authentication.security.authentication.entry_point" class="Lexik\Bundle\JWTAuthenticationBundle\Security\Http\EntryPoint\JWTEntryPoint" public="false">
+      <deprecated>The "%service_id%" service is deprecated since LexikJWTAuthenticationBundle version 2.0 and will be removed in 3.0</deprecated>
+    </service>
+    <service id="lexik_jwt_authentication.jwt_manager" class="Lexik\Bundle\JWTAuthenticationBundle\Services\JWTManager" public="true">
+      <argument type="service" id="lexik_jwt_authentication.encoder.lcobucci"/>
+      <argument type="service" id="event_dispatcher"/>
+      <argument>username</argument>
+      <call method="setUserIdentityField">
+        <argument>username</argument>
+      </call>
+    </service>
+    <service id="lexik_jwt_authentication.key_loader.abstract" public="false" abstract="true">
+      <argument></argument>
+      <argument></argument>
+      <argument>%env(JWT_PASSPHRASE)%</argument>
+    </service>
+    <service id="lexik_jwt_authentication.key_loader.openssl" class="Lexik\Bundle\JWTAuthenticationBundle\Services\KeyLoader\OpenSSLKeyLoader" public="false">
+      <argument></argument>
+      <argument></argument>
+      <argument>%env(JWT_PASSPHRASE)%</argument>
+      <deprecated>The "%service_id%" service is deprecated since version 2.5 and will be removed in 3.0. Use lexik_jwt_authentication.key_loader.raw instead.</deprecated>
+    </service>
+    <service id="lexik_jwt_authentication.key_loader.raw" class="Lexik\Bundle\JWTAuthenticationBundle\Services\KeyLoader\RawKeyLoader" public="false">
+      <argument>%env(resolve:JWT_SECRET_KEY)%</argument>
+      <argument>%env(resolve:JWT_PUBLIC_KEY)%</argument>
+      <argument>%env(JWT_PASSPHRASE)%</argument>
+    </service>
+    <service id="lexik_jwt_authentication.encoder.default" class="Lexik\Bundle\JWTAuthenticationBundle\Encoder\DefaultEncoder">
+      <argument type="service" id="lexik_jwt_authentication.jws_provider.default"/>
+    </service>
+    <service id="lexik_jwt_authentication.jws_provider.default" class="Lexik\Bundle\JWTAuthenticationBundle\Services\JWSProvider\DefaultJWSProvider" public="false">
+      <argument type="service" id="lexik_jwt_authentication.key_loader.raw"/>
+      <argument>openssl</argument>
+      <argument>RS256</argument>
+      <argument>3600</argument>
+      <argument>0</argument>
+      <deprecated>The "%service_id%" is deprecated since version 2.5 and will be removed in 5.0, use "lexik_jwt_authentication.jws_provider.lcobucci" instead.</deprecated>
+    </service>
+    <service id="lexik_jwt_authentication.encoder.lcobucci" class="Lexik\Bundle\JWTAuthenticationBundle\Encoder\LcobucciJWTEncoder">
+      <argument type="service" id="lexik_jwt_authentication.jws_provider.lcobucci"/>
+    </service>
+    <service id="lexik_jwt_authentication.jws_provider.lcobucci" class="Lexik\Bundle\JWTAuthenticationBundle\Services\JWSProvider\LcobucciJWSProvider" public="false">
+      <argument type="service" id="lexik_jwt_authentication.key_loader.raw"/>
+      <argument>openssl</argument>
+      <argument>RS256</argument>
+      <argument>3600</argument>
+      <argument>0</argument>
+    </service>
+    <service id="lexik_jwt_authentication.handler.authentication_success" class="Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
+      <argument type="service" id="event_dispatcher"/>
+    </service>
+    <service id="lexik_jwt_authentication.handler.authentication_failure" class="Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationFailureHandler">
+      <tag name="monolog.logger" channel="security"/>
+      <argument type="service" id="event_dispatcher"/>
+    </service>
+    <service id="lexik_jwt_authentication.security.guard.jwt_token_authenticator" class="Lexik\Bundle\JWTAuthenticationBundle\Security\Guard\JWTTokenAuthenticator">
+      <argument type="service" id="lexik_jwt_authentication.jwt_manager"/>
+      <argument type="service" id="event_dispatcher"/>
+      <argument type="service" id="lexik_jwt_authentication.extractor.chain_extractor"/>
+    </service>
+    <service id="lexik_jwt_authentication.extractor.chain_extractor" class="Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\ChainTokenExtractor" public="false">
+      <argument type="collection">
+        <argument type="service" id="lexik_jwt_authentication.extractor.authorization_header_extractor"/>
+      </argument>
+    </service>
+    <service id="lexik_jwt_authentication.extractor.authorization_header_extractor" class="Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\AuthorizationHeaderTokenExtractor">
+      <argument>Bearer</argument>
+      <argument>Authorization</argument>
+    </service>
+    <service id="lexik_jwt_authentication.extractor.query_parameter_extractor" class="Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\QueryParameterTokenExtractor">
+      <argument></argument>
+    </service>
+    <service id="lexik_jwt_authentication.extractor.cookie_extractor" class="Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\CookieTokenExtractor">
+      <argument></argument>
+    </service>
+    <service id="lexik_jwt_authentication.security.jwt_user_provider" class="Lexik\Bundle\JWTAuthenticationBundle\Security\User\JWTUserProvider" public="false">
+      <argument></argument>
+    </service>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\AnalyticsBundle\Producer\DataSenderProducer" class="App\AnalyticsBundle\Producer\DataSenderProducer" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\AnalyticsBundle\Producer\DataSenderProducer" class="App\AnalyticsBundle\Producer\DataSenderProducer" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\AnalyticsBundle\Producer\DataSenderProducer" class="App\AnalyticsBundle\Producer\DataSenderProducer" autowire="true" autoconfigure="true" abstract="true"/>
@@ -1048,6 +2469,21 @@
         <argument key="inline" type="service" id="fragment.renderer.inline"/>
       </argument>
     </service>
+    <service id="fos_rest.serializer.form_error_handler" class="FOS\RestBundle\Serializer\Normalizer\FormErrorHandler">
+      <tag name="jms_serializer.subscribing_handler"/>
+      <argument type="service" id="fos_rest.serializer.form_error_handler.inner"/>
+    </service>
+    <service id="debug.security.voter.security.access.authenticated_voter" class="Symfony\Component\Security\Core\Authorization\Voter\TraceableVoter">
+      <argument type="service" id="security.access.authenticated_voter"/>
+      <argument type="service" id="event_dispatcher"/>
+    </service>
+    <service id="debug.security.voter.security.access.simple_role_voter" class="Symfony\Component\Security\Core\Authorization\Voter\TraceableVoter">
+      <argument type="service" id="security.access.simple_role_voter"/>
+      <argument type="service" id="event_dispatcher"/>
+    </service>
+    <service id="security.logout.handler.csrf_token_clearing" class="Symfony\Component\Security\Http\Logout\CsrfTokenClearingLogoutHandler" public="false">
+      <argument type="service" id="security.csrf.token_storage"/>
+    </service>
     <service id="logger" class="Symfony\Component\HttpKernel\Log\Logger" public="false"/>
     <service id=".service_locator.WPZmidW" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
@@ -1058,6 +2494,13 @@
         <argument key="session_storage" type="service" id="session.storage.native" on-invalid="ignore"/>
       </argument>
     </service>
+    <service id=".service_locator.jD4_ZG7" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="security.authorization_checker" type="service" id="security.authorization_checker"/>
+        <argument key="security.token_storage" type="service" id="security.token_storage"/>
+      </argument>
+    </service>
     <service id=".service_locator.KTVqfp6" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -1065,6 +2508,9 @@
         <argument key="parameter_bag" type="service" id="parameter_bag" on-invalid="ignore"/>
         <argument key="request_stack" type="service" id="request_stack" on-invalid="ignore"/>
         <argument key="router" type="service" id="router.default" on-invalid="ignore"/>
+        <argument key="security.authorization_checker" type="service" id="security.authorization_checker" on-invalid="ignore"/>
+        <argument key="security.csrf.token_manager" type="service" id="security.csrf.token_manager" on-invalid="ignore"/>
+        <argument key="security.token_storage" type="service" id="security.token_storage" on-invalid="ignore"/>
         <argument key="session" type="service" id="session" on-invalid="ignore"/>
       </argument>
     </service>
@@ -1098,8 +2544,20 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.m8PwGkX" method="withContext"/>
     </service>
+    <service id="debug.security.access.decision_manager.inner" class="Symfony\Component\Security\Core\Authorization\AccessDecisionManager" public="false">
+      <argument type="iterator">
+        <argument type="service" id="debug.security.voter.security.access.authenticated_voter"/>
+        <argument type="service" id="debug.security.voter.security.access.simple_role_voter"/>
+      </argument>
+      <argument>affirmative</argument>
+      <argument>false</argument>
+      <argument>true</argument>
+    </service>
+    <service id="fos_rest.serializer.form_error_handler.inner" class="JMS\Serializer\Handler\FormErrorHandler" public="false">
+      <argument>null</argument>
+    </service>
     <service id="console.command_loader" class="Symfony\Component\Console\CommandLoader\ContainerCommandLoader" public="true">
-      <argument type="service" id=".service_locator.PIceQkB"/>
+      <argument type="service" id=".service_locator.lAWC9tF"/>
       <argument type="collection">
         <argument key="about">console.command.about</argument>
         <argument key="assets:install">console.command.assets_install</argument>
@@ -1126,9 +2584,12 @@
         <argument key="rabbitmq:rpc-server">old_sound_rabbit_mq.command.rpc_server_command</argument>
         <argument key="rabbitmq:setup-fabric">old_sound_rabbit_mq.command.setup_fabric_command</argument>
         <argument key="rabbitmq:stdin-producer">old_sound_rabbit_mq.command.std_in_producer_command</argument>
+        <argument key="security:encode-password">security.command.user_password_encoder</argument>
+        <argument key="lexik:jwt:check-config">lexik_jwt_authentication.check_config_command</argument>
+        <argument key="lexik:jwt:generate-token">lexik_jwt_authentication.generate_token_command</argument>
       </argument>
     </service>
-    <service id=".service_locator.PIceQkB" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.lAWC9tF" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="console.command.about" type="service" id="console.command.about"/>
@@ -1146,6 +2607,8 @@
         <argument key="console.command.router_debug" type="service" id="console.command.router_debug"/>
         <argument key="console.command.router_match" type="service" id="console.command.router_match"/>
         <argument key="console.command.yaml_lint" type="service" id="console.command.yaml_lint"/>
+        <argument key="lexik_jwt_authentication.check_config_command" type="service" id="lexik_jwt_authentication.check_config_command"/>
+        <argument key="lexik_jwt_authentication.generate_token_command" type="service" id="lexik_jwt_authentication.generate_token_command"/>
         <argument key="old_sound_rabbit_mq.anon_consumer_command" type="service" id="old_sound_rabbit_mq.anon_consumer_command"/>
         <argument key="old_sound_rabbit_mq.batch_consumer_command" type="service" id="old_sound_rabbit_mq.batch_consumer_command"/>
         <argument key="old_sound_rabbit_mq.command.rpc_server_command" type="service" id="old_sound_rabbit_mq.command.rpc_server_command"/>
@@ -1156,6 +2619,22 @@
         <argument key="old_sound_rabbit_mq.dynamic_consumer_command" type="service" id="old_sound_rabbit_mq.dynamic_consumer_command"/>
         <argument key="old_sound_rabbit_mq.multiple_consumer_command" type="service" id="old_sound_rabbit_mq.multiple_consumer_command"/>
         <argument key="old_sound_rabbit_mq.purge_consumer_command" type="service" id="old_sound_rabbit_mq.purge_consumer_command"/>
+        <argument key="security.command.user_password_encoder" type="service" id="security.command.user_password_encoder"/>
+      </argument>
+    </service>
+    <service id=".service_locator..a3fWhj" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="jms_serializer.doctrine_proxy_subscriber" type="service" id="jms_serializer.doctrine_proxy_subscriber"/>
+      </argument>
+    </service>
+    <service id=".service_locator.zfW.ecC" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="fos_rest.serializer.form_error_handler" type="service" id="fos_rest.serializer.form_error_handler"/>
+        <argument key="jms_serializer.array_collection_handler" type="service" id="jms_serializer.array_collection_handler"/>
+        <argument key="jms_serializer.constraint_violation_handler" type="service" id="jms_serializer.constraint_violation_handler"/>
+        <argument key="jms_serializer.datetime_handler" type="service" id="jms_serializer.datetime_handler"/>
       </argument>
     </service>
     <service id="Psr\Container\ContainerInterface" alias="service_container" public="false"/>
@@ -1182,6 +2661,9 @@
     <service id="Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface" alias="session.flash_bag" public="false"/>
     <service id="session.storage.filesystem" alias="session.storage.mock_file" public="false"/>
     <service id="session.storage" alias="session.storage.native"/>
+    <service id="Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface" alias="security.csrf.token_generator" public="false"/>
+    <service id="Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface" alias="security.csrf.token_storage" public="false"/>
+    <service id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface" alias="security.csrf.token_manager" public="false"/>
     <service id="cache.default_redis_provider" alias=".cache_connection.GD_MSZC" public="false"/>
     <service id="cache.default_memcached_provider" alias=".cache_connection.JKE6keX" public="false"/>
     <service id="Symfony\Component\HttpKernel\Debug\FileLinkFormatter" alias="debug.file_link_formatter" public="false"/>
@@ -1191,7 +2673,59 @@
     <service id="Symfony\Component\Routing\Matcher\UrlMatcherInterface" alias="router.default" public="false"/>
     <service id="Symfony\Component\Routing\RequestContextAwareInterface" alias="router.default" public="false"/>
     <service id="Symfony\Component\Routing\RequestContext" alias="router.request_context" public="false"/>
+    <service id="annotation_reader" alias="annotations.reader" public="false"/>
+    <service id="Doctrine\Common\Annotations\Reader" alias="annotations.reader" public="false"/>
+    <service id="Symfony\Component\PropertyAccess\PropertyAccessorInterface" alias="property_accessor" public="false"/>
+    <service id="FOS\RestBundle\View\ViewHandlerInterface" alias="fos_rest.view_handler.default"/>
+    <service id="FOS\RestBundle\Request\ParamFetcherInterface" alias="fos_rest.request.param_fetcher"/>
+    <service id="fos_rest.router" alias="router.default"/>
+    <service id="fos_rest.view_handler" alias="fos_rest.view_handler.default" public="true"/>
+    <service id="fos_rest.inflector" alias="fos_rest.inflector.doctrine"/>
+    <service id="jms_serializer.metadata_driver" alias="jms_serializer.metadata.chain_driver" public="true"/>
+    <service id="jms_serializer.metadata.cache" alias="jms_serializer.metadata.cache.file_cache" public="false"/>
+    <service id="jms_serializer.naming_strategy" alias="jms_serializer.serialized_name_annotation_strategy" public="false"/>
+    <service id="jms_serializer.object_constructor" alias="jms_serializer.unserialize_object_constructor" public="false"/>
+    <service id="jms_serializer.deserialization_context_factory" alias="jms_serializer.configured_deserialization_context_factory" public="true"/>
+    <service id="jms_serializer.serialization_context_factory" alias="jms_serializer.configured_serialization_context_factory" public="true"/>
+    <service id="jms_serializer" alias="jms_serializer.serializer" public="true"/>
+    <service id="JMS\Serializer\SerializerInterface" alias="jms_serializer.serializer" public="false"/>
+    <service id="JMS\Serializer\ArrayTransformerInterface" alias="jms_serializer.serializer" public="false"/>
+    <service id="jms_serializer.accessor_strategy" alias="jms_serializer.accessor_strategy.default" public="false"/>
+    <service id="Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface" alias="security.authorization_checker" public="false"/>
+    <service id="Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface" alias="security.token_storage" public="false"/>
+    <service id="Symfony\Component\Security\Core\Security" alias="security.helper" public="false"/>
+    <service id="Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface" alias="security.authentication.manager" public="false"/>
+    <service id="Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface" alias="security.authentication.session_strategy" public="false"/>
+    <service id="security.encoder_factory" alias="security.encoder_factory.generic" public="false"/>
+    <service id="Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface" alias="security.encoder_factory.generic" public="false"/>
+    <service id="security.password_encoder" alias="security.user_password_encoder.generic" public="true"/>
+    <service id="Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface" alias="security.user_password_encoder.generic" public="false"/>
+    <service id="Symfony\Component\Security\Http\Authentication\AuthenticationUtils" alias="security.authentication_utils" public="false"/>
+    <service id="Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface" alias="debug.security.access.decision_manager" public="false"/>
+    <service id="Symfony\Component\Security\Core\Role\RoleHierarchyInterface" alias="security.role_hierarchy" public="false"/>
+    <service id="Symfony\Component\Security\Http\Firewall" alias="debug.security.firewall" public="false"/>
+    <service id="Symfony\Component\Security\Http\HttpUtils" alias="security.http_utils" public="false"/>
+    <service id="Symfony\Component\Security\Guard\GuardAuthenticatorHandler" alias="security.authentication.guard_handler" public="false"/>
+    <service id="security.firewall" alias="debug.security.firewall" public="false"/>
+    <service id="Symfony\Component\Security\Core\User\UserProviderInterface" alias="security.user.provider.concrete.in_memory"/>
+    <service id="security.authentication.session_strategy.main" alias="security.authentication.session_strategy"/>
+    <service id="security.user_checker.main" alias="security.user_checker" public="false"/>
+    <service id="Symfony\Component\Security\Core\User\UserCheckerInterface" alias="security.user_checker" public="false"/>
+    <service id="Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenInterface" alias="lexik_jwt_authentication.jwt_manager"/>
+    <service id="Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface" alias="lexik_jwt_authentication.jwt_manager"/>
+    <service id="Lexik\Bundle\JWTAuthenticationBundle\Services\JWSProvider\JWSProviderInterface" alias="lexik_jwt_authentication.jws_provider.lcobucci"/>
+    <service id="Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationSuccessHandler" alias="lexik_jwt_authentication.handler.authentication_success"/>
+    <service id="Lexik\Bundle\JWTAuthenticationBundle\Security\Http\Authentication\AuthenticationFailureHandler" alias="lexik_jwt_authentication.handler.authentication_failure"/>
+    <service id="lexik_jwt_authentication.jwt_token_authenticator" alias="lexik_jwt_authentication.security.guard.jwt_token_authenticator"/>
+    <service id="Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\TokenExtractorInterface" alias="lexik_jwt_authentication.extractor.chain_extractor"/>
+    <service id="lexik_jwt_authentication.encoder" alias="lexik_jwt_authentication.encoder.lcobucci" public="true"/>
+    <service id="Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface" alias="lexik_jwt_authentication.encoder.lcobucci"/>
+    <service id="lexik_jwt_authentication.key_loader" alias="lexik_jwt_authentication.key_loader.raw" public="true"/>
     <service id="argument_resolver.controller_locator" alias=".service_locator..0O.wAU"/>
+    <service id="fos_rest.serializer" alias="fos_rest.serializer.jms"/>
     <service id="Psr\Log\LoggerInterface" alias="logger" public="false"/>
+    <service id="security.access.decision_manager" alias="debug.security.access.decision_manager" public="false"/>
+    <service id="jms_serializer.form_error_handler" alias="fos_rest.serializer.form_error_handler" public="false"/>
+    <service id="fos_rest.serializer.jms_handler_registry" alias="jms_serializer.handler_registry" public="true"/>
   </services>
 </container>

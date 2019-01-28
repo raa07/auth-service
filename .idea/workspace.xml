@@ -2,11 +2,132 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b7a493ad-c032-4a80-b1bc-c4b1424e4b4a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/auth-service.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/auth-service.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/old_sound_rabbit_mq.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/old_sound_rabbit_mq.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/index.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AnalyticsBundle/Consumer/DataSenderConsumer.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/AnalyticsBundle/Consumer/DataSenderConsumer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl.legacy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getArgumentResolver_ServiceService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getCacheClearerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getCacheWarmerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getCache_AppClearerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getCache_AppService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getCache_GlobalClearerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getCache_SystemClearerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getCache_SystemService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_CommandLoaderService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_AboutService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_AssetsInstallService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_CacheClearService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_CachePoolClearService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_CachePoolDeleteService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_CachePoolPruneService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_CacheWarmupService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_ConfigDebugService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_ConfigDumpReferenceService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_ContainerDebugService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_DebugAutowiringService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_EventDispatcherDebugService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_RouterDebugService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_RouterMatchService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_Command_YamlLintService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getConsole_ErrorListenerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getDataSenderProducerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getFilesystemService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getHttpExceptionListenerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_AnonConsumerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_BatchConsumerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_Command_RpcServerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_Command_SetupFabricCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_Command_StdInProducerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_Connection_DefaultService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_ConsumerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_DeleteCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_DynamicConsumerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_MultipleConsumerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_PartsHolderService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_PurgeConsumerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_SendEmailConsumerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getOldSoundRabbitMq_SendEmailProducerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getRedirectControllerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getRouter_CacheWarmerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getRouting_LoaderService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getServicesResetterService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getSessionService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getSession_Storage_NativeService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/getTemplateControllerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/get_ServiceLocator_7xVonyPService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/removed-ids.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/Container0XWsZtl/srcApp_KernelDevDebugContainer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getArgumentResolver_ServiceService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getCacheClearerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getCacheWarmerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getCache_AppClearerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getCache_AppService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getCache_GlobalClearerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getCache_SystemClearerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getCache_SystemService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_CommandLoaderService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_AboutService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_AssetsInstallService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_CacheClearService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_CachePoolClearService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_CachePoolDeleteService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_CachePoolPruneService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_CacheWarmupService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_ConfigDebugService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_ConfigDumpReferenceService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_ContainerDebugService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_DebugAutowiringService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_EventDispatcherDebugService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_RouterDebugService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_RouterMatchService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_Command_YamlLintService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getConsole_ErrorListenerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getDataSenderProducerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getFilesystemService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getHttpExceptionListenerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_AnonConsumerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_BatchConsumerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_Command_RpcServerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_Command_SetupFabricCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_Command_StdInProducerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_Connection_DefaultService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_ConsumerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_DeleteCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_DynamicConsumerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_MultipleConsumerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_PartsHolderService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_PurgeConsumerCommandService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_SendEmailConsumerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getOldSoundRabbitMq_SendEmailProducerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getRedirectControllerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getRouter_CacheWarmerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getRouting_LoaderService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getServicesResetterService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getSessionService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getSession_Storage_NativeService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/getTemplateControllerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/get_ServiceLocator_7xVonyPService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/removed-ids.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/ContainerVkYxCQS/srcApp_KernelDevDebugContainer.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainer.php" beforeDir="false" afterPath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainer.php.meta" beforeDir="false" afterPath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainer.php.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainer.xml" beforeDir="false" afterPath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainer.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainer.xml.meta" beforeDir="false" afterPath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainer.xml.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainerCompiler.log" beforeDir="false" afterPath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainerCompiler.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainerDeprecations.log" beforeDir="false" afterPath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainerDeprecations.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainerUrlGenerator.php.meta" beforeDir="false" afterPath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainerUrlGenerator.php.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainerUrlMatcher.php.meta" beforeDir="false" afterPath="$PROJECT_DIR$/var/cache/dev/srcApp_KernelDevDebugContainerUrlMatcher.php.meta" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,8 +143,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/packages/old_sound_rabbit_mq.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="15" lean-forward="true" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="15" />
+            <state relative-caret-position="195">
+              <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -43,8 +164,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AnalyticsBundle/Consumer/DataSenderConsumer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
+            <state relative-caret-position="270">
+              <caret line="18" selection-start-line="18" selection-end-line="18" />
               <folding>
                 <element signature="e#49#104#0#PHP" expanded="true" />
               </folding>
@@ -52,11 +173,25 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config/packages/security.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="364">
+              <caret line="32" column="46" selection-start-line="32" selection-start-column="46" selection-end-line="32" selection-end-column="46" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docker-compose.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="23" selection-start-line="23" selection-start-column="1" selection-end-line="28" selection-end-column="36" />
+            <state relative-caret-position="285">
+              <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -64,8 +199,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Dockerfile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
+            <state relative-caret-position="189">
+              <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -100,11 +235,13 @@
         <option value="$PROJECT_DIR$/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/IO/StreamIO.php" />
         <option value="$PROJECT_DIR$/src/AnalyticsBundle/Producer/DataSenderProducer.php" />
         <option value="$PROJECT_DIR$/config/services.yaml" />
-        <option value="$PROJECT_DIR$/src/AnalyticsBundle/Consumer/DataSenderConsumer.php" />
         <option value="$PROJECT_DIR$/bin/hello-worker" />
-        <option value="$PROJECT_DIR$/config/packages/old_sound_rabbit_mq.yaml" />
         <option value="$PROJECT_DIR$/Dockerfile" />
+        <option value="$PROJECT_DIR$/config/packages/old_sound_rabbit_mq.yaml" />
+        <option value="$PROJECT_DIR$/src/AnalyticsBundle/Consumer/DataSenderConsumer.php" />
         <option value="$PROJECT_DIR$/docker-compose.yml" />
+        <option value="$PROJECT_DIR$/config/packages/fos_rest.yaml" />
+        <option value="$PROJECT_DIR$/config/packages/security.yaml" />
       </list>
     </option>
   </component>
@@ -136,12 +273,45 @@
       <path value="$PROJECT_DIR$/vendor/symfony/routing" />
       <path value="$PROJECT_DIR$/vendor/php-amqplib/php-amqplib" />
       <path value="$PROJECT_DIR$/vendor/php-amqplib/rabbitmq-bundle" />
+      <path value="$PROJECT_DIR$/vendor/friendsofsymfony/rest-bundle" />
+      <path value="$PROJECT_DIR$/vendor/willdurand/jsonp-callback-validator" />
+      <path value="$PROJECT_DIR$/vendor/willdurand/negotiation" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/vendor/symfony/templating" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-core" />
+      <path value="$PROJECT_DIR$/vendor/jms/serializer" />
+      <path value="$PROJECT_DIR$/vendor/jms/serializer-bundle" />
+      <path value="$PROJECT_DIR$/vendor/jms/metadata" />
+      <path value="$PROJECT_DIR$/vendor/hoa/visitor" />
+      <path value="$PROJECT_DIR$/vendor/hoa/event" />
+      <path value="$PROJECT_DIR$/vendor/hoa/compiler" />
+      <path value="$PROJECT_DIR$/vendor/hoa/math" />
+      <path value="$PROJECT_DIR$/vendor/hoa/stream" />
+      <path value="$PROJECT_DIR$/vendor/hoa/file" />
+      <path value="$PROJECT_DIR$/vendor/hoa/regex" />
+      <path value="$PROJECT_DIR$/vendor/hoa/protocol" />
+      <path value="$PROJECT_DIR$/vendor/hoa/iterator" />
+      <path value="$PROJECT_DIR$/vendor/hoa/consistency" />
+      <path value="$PROJECT_DIR$/vendor/hoa/zformat" />
+      <path value="$PROJECT_DIR$/vendor/hoa/ustring" />
+      <path value="$PROJECT_DIR$/vendor/hoa/exception" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/annotations" />
+      <path value="$PROJECT_DIR$/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/vendor/namshi/jose" />
+      <path value="$PROJECT_DIR$/vendor/lexik/jwt-authentication-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/inflector" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-http" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-guard" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-csrf" />
+      <path value="$PROJECT_DIR$/vendor/symfony/property-access" />
     </include_path>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="90" />
     <option name="y" value="27" />
-    <option name="width" value="1431" />
+    <option name="width" value="1600" />
     <option name="height" value="873" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -161,30 +331,13 @@
             <path>
               <item name="auth-service" type="b2602c69:ProjectViewProjectNode" />
               <item name="auth-service" type="462c0819:PsiDirectoryNode" />
-              <item name="bin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="auth-service" type="b2602c69:ProjectViewProjectNode" />
-              <item name="auth-service" type="462c0819:PsiDirectoryNode" />
               <item name="config" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="auth-service" type="b2602c69:ProjectViewProjectNode" />
               <item name="auth-service" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="auth-service" type="b2602c69:ProjectViewProjectNode" />
-              <item name="auth-service" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AnalyticsBundle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="auth-service" type="b2602c69:ProjectViewProjectNode" />
-              <item name="auth-service" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AnalyticsBundle" type="462c0819:PsiDirectoryNode" />
-              <item name="Consumer" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="packages" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -240,7 +393,7 @@
     <frame x="0" y="27" width="1600" height="873" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2007722" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2007722" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -253,7 +406,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32880434" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" visible="true" weight="0.5217391" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.3097826" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -355,11 +508,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/IO/SocketIO.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-585" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/composer.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -405,6 +553,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Dockerfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="16" selection-start-line="19" selection-start-column="16" selection-end-line="19" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/php-amqplib/php-amqplib/PhpAmqpLib/Wire/IO/SocketIO.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1755" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/old_sound_rabbit_mq.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AnalyticsBundle/Producer/DataSenderProducer.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -415,34 +589,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/jms_serializer.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/fos_rest.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="25" lean-forward="true" selection-start-line="11" selection-start-column="25" selection-end-line="11" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/AnalyticsBundle/Consumer/DataSenderConsumer.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="270">
+          <caret line="18" selection-start-line="18" selection-end-line="18" />
           <folding>
             <element signature="e#49#104#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Dockerfile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="29" column="32" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/packages/old_sound_rabbit_mq.yaml">
+    <entry file="file://$PROJECT_DIR$/config/packages/security.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="15" lean-forward="true" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docker-compose.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
-          <caret line="23" selection-start-line="23" selection-start-column="1" selection-end-line="28" selection-end-column="36" />
+        <state relative-caret-position="364">
+          <caret line="32" column="46" selection-start-line="32" selection-start-column="46" selection-end-line="32" selection-end-column="46" />
         </state>
       </provider>
     </entry>

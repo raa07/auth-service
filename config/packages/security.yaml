@@ -1,0 +1,33 @@
+security:
+    encoders:
+        App\Security\User:
+            algorithm: argon2i
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        #        app_user_provider:
+        #            entity:
+        #                id: App\UserBundle\Entity\User
+        #            id: App\UserBundle\Security\UserProvider
+        memory_test:
+            memory:
+                users:
+                    user:  { password: 'test', roles: [ 'ROLE_USER' ] }
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: ~
+            logout: ~
+
+            guard:
+                authenticators:
+                    - App\UserBundle\Security\JwtTokenAuthenticator
+    #        api:
+    #            pattern: ^/users/
+
+
+    access_control:
+        - { path: ^/users*, roles: ROLE_USER }

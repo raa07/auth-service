@@ -4,8 +4,1578 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2bf6a0b52ae973d06b4644cc1987b99d",
+    "content-hash": "39624d83dfe3aa9c23e8dd63d244d4fc",
     "packages": [
+        {
+            "name": "doctrine/annotations",
+            "version": "1.7.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/annotations.git",
+                "reference": "232c5da3903f788e02328b4e8486eceea0c76e58"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/232c5da3903f788e02328b4e8486eceea0c76e58",
+                "reference": "232c5da3903f788e02328b4e8486eceea0c76e58",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/lexer": "1.*",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "doctrine/cache": "1.*",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\Annotations\\": "lib/Doctrine/Common/Annotations"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Docblock Annotations Parser",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "annotations",
+                "docblock",
+                "parser"
+            ],
+            "time": "2018-05-06T10:14:50+00:00"
+        },
+        {
+            "name": "doctrine/inflector",
+            "version": "1.3.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/inflector.git",
+                "reference": "45d9b132b262c1d03835cdeefd42938d881556fa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/45d9b132b262c1d03835cdeefd42938d881556fa",
+                "reference": "45d9b132b262c1d03835cdeefd42938d881556fa",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\Inflector\\": "lib/Doctrine/Common/Inflector"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Common String Manipulations with regard to casing and singular/plural rules.",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "inflection",
+                "pluralize",
+                "singularize",
+                "string"
+            ],
+            "time": "2018-06-15T19:03:38+00:00"
+        },
+        {
+            "name": "doctrine/instantiator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/instantiator.git",
+                "reference": "8c8c1afee0f929f17528fe1721de5d58e15f71c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8c8c1afee0f929f17528fe1721de5d58e15f71c7",
+                "reference": "8c8c1afee0f929f17528fe1721de5d58e15f71c7",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^5.0",
+                "ext-pdo": "*",
+                "ext-phar": "*",
+                "phpbench/phpbench": "^0.13",
+                "phpstan/phpstan-shim": "^0.9.2",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Instantiator\\": "src/Doctrine/Instantiator/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "http://ocramius.github.com/"
+                }
+            ],
+            "description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
+            "homepage": "https://www.doctrine-project.org/projects/instantiator.html",
+            "keywords": [
+                "constructor",
+                "instantiate"
+            ],
+            "time": "2018-10-15T11:30:00+00:00"
+        },
+        {
+            "name": "doctrine/lexer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/lexer.git",
+                "reference": "4ab6ea7c838ccb340883fd78915af079949cc64d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/lexer/zipball/4ab6ea7c838ccb340883fd78915af079949cc64d",
+                "reference": "4ab6ea7c838ccb340883fd78915af079949cc64d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\Lexer\\": "lib/Doctrine/Common/Lexer"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "PHP Doctrine Lexer parser library that can be used in Top-Down, Recursive Descent Parsers.",
+            "homepage": "https://www.doctrine-project.org/projects/lexer.html",
+            "keywords": [
+                "annotations",
+                "docblock",
+                "lexer",
+                "parser",
+                "php"
+            ],
+            "time": "2018-10-21T19:22:05+00:00"
+        },
+        {
+            "name": "friendsofsymfony/rest-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
+                "reference": "52a6a47de9408544e35e9c253097b4d2ef4534b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/52a6a47de9408544e35e9c253097b4d2ef4534b8",
+                "reference": "52a6a47de9408544e35e9c253097b4d2ef4534b8",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/inflector": "^1.0",
+                "php": "^5.5.9|~7.0",
+                "psr/log": "^1.0",
+                "symfony/config": "^3.4|^4.0",
+                "symfony/debug": "^3.4|^4.0",
+                "symfony/dependency-injection": "^3.4|^4.0",
+                "symfony/event-dispatcher": "^3.4|^4.0",
+                "symfony/finder": "^3.4|^4.0",
+                "symfony/framework-bundle": "^3.4|^4.0",
+                "symfony/http-foundation": "^3.4|^4.0",
+                "symfony/http-kernel": "^3.4|^4.0",
+                "symfony/routing": "^3.4|^4.0",
+                "symfony/security-core": "^3.4|^4.0",
+                "symfony/templating": "^3.4|^4.0",
+                "willdurand/jsonp-callback-validator": "^1.0",
+                "willdurand/negotiation": "^2.0"
+            },
+            "conflict": {
+                "jms/serializer": "<1.13.0",
+                "jms/serializer-bundle": "<2.0.0",
+                "sensio/framework-extra-bundle": "<3.0.13"
+            },
+            "require-dev": {
+                "jms/serializer": "^1.13|^2.0",
+                "jms/serializer-bundle": "^2.3.1|^3.0",
+                "phpoption/phpoption": "^1.1",
+                "psr/http-message": "^1.0",
+                "sensio/framework-extra-bundle": "^3.0.13|^4.0|^5.0",
+                "symfony/asset": "^3.4|^4.0",
+                "symfony/browser-kit": "^3.4|^4.0",
+                "symfony/css-selector": "^3.4|^4.0",
+                "symfony/dependency-injection": "^2.7.20|^3.0|^4.0",
+                "symfony/expression-language": "~2.7|^3.0|^4.0",
+                "symfony/form": "^3.4|^4.0",
+                "symfony/phpunit-bridge": "^4.1.8",
+                "symfony/security-bundle": "^3.4|^4.0",
+                "symfony/serializer": "^2.7.11|^3.0.4|^4.0",
+                "symfony/twig-bundle": "^3.4|^4.0",
+                "symfony/validator": "^3.4|^4.0",
+                "symfony/web-profiler-bundle": "^3.4|^4.0",
+                "symfony/yaml": "^3.4|^4.0"
+            },
+            "suggest": {
+                "jms/serializer-bundle": "Add support for advanced serialization capabilities, recommended, requires ^2.0|^3.0",
+                "sensio/framework-extra-bundle": "Add support for the request body converter and the view response listener, requires ^3.0",
+                "symfony/expression-language": "Add support for using the expression language in the routing, requires ^2.7|^3.0",
+                "symfony/serializer": "Add support for basic serialization capabilities and xml decoding, requires ^2.7|^3.0",
+                "symfony/validator": "Add support for validation capabilities in the ParamFetcher, requires ^2.7|^3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FOS\\RestBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lukas Kahwe Smith",
+                    "email": "smith@pooteeweet.org"
+                },
+                {
+                    "name": "FriendsOfSymfony Community",
+                    "homepage": "https://github.com/friendsofsymfony/FOSRestBundle/contributors"
+                },
+                {
+                    "name": "Konstantin Kudryashov",
+                    "email": "ever.zet@gmail.com"
+                }
+            ],
+            "description": "This Bundle provides various tools to rapidly develop RESTful API's with Symfony",
+            "homepage": "http://friendsofsymfony.github.com",
+            "keywords": [
+                "rest"
+            ],
+            "time": "2019-01-23T15:16:40+00:00"
+        },
+        {
+            "name": "hoa/compiler",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/Compiler.git",
+                "reference": "c620f44deff0b4c2d0c27560a3b0f5e7e376e001"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/Compiler/zipball/c620f44deff0b4c2d0c27560a3b0f5e7e376e001",
+                "reference": "c620f44deff0b4c2d0c27560a3b0f5e7e376e001",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/consistency": "~1.0",
+                "hoa/exception": "~1.0",
+                "hoa/file": "~1.0",
+                "hoa/iterator": "~2.0",
+                "hoa/math": "~1.0",
+                "hoa/protocol": "~1.0",
+                "hoa/regex": "~1.0",
+                "hoa/visitor": "~2.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "hoa/json": "~2.0",
+                "hoa/test": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\Compiler\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\Compiler library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "algebraic",
+                "ast",
+                "compiler",
+                "context-free",
+                "coverage",
+                "exhaustive",
+                "grammar",
+                "isotropic",
+                "language",
+                "lexer",
+                "library",
+                "ll1",
+                "llk",
+                "parser",
+                "pp",
+                "random",
+                "regular",
+                "rule",
+                "sampler",
+                "syntax",
+                "token",
+                "trace",
+                "uniform"
+            ],
+            "time": "2018-08-20T19:46:55+00:00"
+        },
+        {
+            "name": "hoa/consistency",
+            "version": "1.17.05.02",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/Consistency.git",
+                "reference": "fd7d0adc82410507f332516faf655b6ed22e4c2f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/Consistency/zipball/fd7d0adc82410507f332516faf655b6ed22e4c2f",
+                "reference": "fd7d0adc82410507f332516faf655b6ed22e4c2f",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/exception": "~1.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "hoa/stream": "~1.0",
+                "hoa/test": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\Consistency\\": "."
+                },
+                "files": [
+                    "Prelude.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\Consistency library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "autoloader",
+                "callable",
+                "consistency",
+                "entity",
+                "flex",
+                "keyword",
+                "library"
+            ],
+            "time": "2017-05-02T12:18:12+00:00"
+        },
+        {
+            "name": "hoa/event",
+            "version": "1.17.01.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/Event.git",
+                "reference": "6c0060dced212ffa3af0e34bb46624f990b29c54"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/Event/zipball/6c0060dced212ffa3af0e34bb46624f990b29c54",
+                "reference": "6c0060dced212ffa3af0e34bb46624f990b29c54",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/consistency": "~1.0",
+                "hoa/exception": "~1.0"
+            },
+            "require-dev": {
+                "hoa/test": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\Event\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\Event library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "event",
+                "library",
+                "listener",
+                "observer"
+            ],
+            "time": "2017-01-13T15:30:50+00:00"
+        },
+        {
+            "name": "hoa/exception",
+            "version": "1.17.01.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/Exception.git",
+                "reference": "091727d46420a3d7468ef0595651488bfc3a458f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/Exception/zipball/091727d46420a3d7468ef0595651488bfc3a458f",
+                "reference": "091727d46420a3d7468ef0595651488bfc3a458f",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/consistency": "~1.0",
+                "hoa/event": "~1.0"
+            },
+            "require-dev": {
+                "hoa/test": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\Exception\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\Exception library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "exception",
+                "library"
+            ],
+            "time": "2017-01-16T07:53:27+00:00"
+        },
+        {
+            "name": "hoa/file",
+            "version": "1.17.07.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/File.git",
+                "reference": "35cb979b779bc54918d2f9a4e02ed6c7a1fa67ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/File/zipball/35cb979b779bc54918d2f9a4e02ed6c7a1fa67ca",
+                "reference": "35cb979b779bc54918d2f9a4e02ed6c7a1fa67ca",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/consistency": "~1.0",
+                "hoa/event": "~1.0",
+                "hoa/exception": "~1.0",
+                "hoa/iterator": "~2.0",
+                "hoa/stream": "~1.0"
+            },
+            "require-dev": {
+                "hoa/test": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\File\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\File library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "Socket",
+                "directory",
+                "file",
+                "finder",
+                "library",
+                "link",
+                "temporary"
+            ],
+            "time": "2017-07-11T07:42:15+00:00"
+        },
+        {
+            "name": "hoa/iterator",
+            "version": "2.17.01.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/Iterator.git",
+                "reference": "d1120ba09cb4ccd049c86d10058ab94af245f0cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/Iterator/zipball/d1120ba09cb4ccd049c86d10058ab94af245f0cc",
+                "reference": "d1120ba09cb4ccd049c86d10058ab94af245f0cc",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/consistency": "~1.0",
+                "hoa/exception": "~1.0"
+            },
+            "require-dev": {
+                "hoa/test": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\Iterator\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\Iterator library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "iterator",
+                "library"
+            ],
+            "time": "2017-01-10T10:34:47+00:00"
+        },
+        {
+            "name": "hoa/math",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/Math.git",
+                "reference": "ad9fa9081754a9768936360dba9068a4d22b97d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/Math/zipball/ad9fa9081754a9768936360dba9068a4d22b97d7",
+                "reference": "ad9fa9081754a9768936360dba9068a4d22b97d7",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/compiler": "~3.0",
+                "hoa/consistency": "~1.0",
+                "hoa/exception": "~1.0",
+                "hoa/iterator": "~2.0",
+                "hoa/protocol": "~1.0",
+                "hoa/zformat": "~1.0",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "hoa/test": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\Math\\": "Source"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\Math library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "arrangement",
+                "combination",
+                "combinatorics",
+                "counting",
+                "library",
+                "math",
+                "permutation",
+                "sampler",
+                "set"
+            ],
+            "time": "2018-09-04T20:17:22+00:00"
+        },
+        {
+            "name": "hoa/protocol",
+            "version": "1.17.01.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/Protocol.git",
+                "reference": "5c2cf972151c45f373230da170ea015deecf19e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/Protocol/zipball/5c2cf972151c45f373230da170ea015deecf19e2",
+                "reference": "5c2cf972151c45f373230da170ea015deecf19e2",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/consistency": "~1.0",
+                "hoa/exception": "~1.0"
+            },
+            "require-dev": {
+                "hoa/test": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\Protocol\\": "."
+                },
+                "files": [
+                    "Wrapper.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\Protocol library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "library",
+                "protocol",
+                "resource",
+                "stream",
+                "wrapper"
+            ],
+            "time": "2017-01-14T12:26:10+00:00"
+        },
+        {
+            "name": "hoa/regex",
+            "version": "1.17.01.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/Regex.git",
+                "reference": "7e263a61b6fb45c1d03d8e5ef77668518abd5bec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/Regex/zipball/7e263a61b6fb45c1d03d8e5ef77668518abd5bec",
+                "reference": "7e263a61b6fb45c1d03d8e5ef77668518abd5bec",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/consistency": "~1.0",
+                "hoa/exception": "~1.0",
+                "hoa/math": "~1.0",
+                "hoa/protocol": "~1.0",
+                "hoa/ustring": "~4.0",
+                "hoa/visitor": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\Regex\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\Regex library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "compiler",
+                "library",
+                "regex"
+            ],
+            "time": "2017-01-13T16:10:24+00:00"
+        },
+        {
+            "name": "hoa/stream",
+            "version": "1.17.02.21",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/Stream.git",
+                "reference": "3293cfffca2de10525df51436adf88a559151d82"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/Stream/zipball/3293cfffca2de10525df51436adf88a559151d82",
+                "reference": "3293cfffca2de10525df51436adf88a559151d82",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/consistency": "~1.0",
+                "hoa/event": "~1.0",
+                "hoa/exception": "~1.0",
+                "hoa/protocol": "~1.0"
+            },
+            "require-dev": {
+                "hoa/test": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\Stream\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\Stream library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "Context",
+                "bucket",
+                "composite",
+                "filter",
+                "in",
+                "library",
+                "out",
+                "protocol",
+                "stream",
+                "wrapper"
+            ],
+            "time": "2017-02-21T16:01:06+00:00"
+        },
+        {
+            "name": "hoa/ustring",
+            "version": "4.17.01.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/Ustring.git",
+                "reference": "e6326e2739178799b1fe3fdd92029f9517fa17a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/Ustring/zipball/e6326e2739178799b1fe3fdd92029f9517fa17a0",
+                "reference": "e6326e2739178799b1fe3fdd92029f9517fa17a0",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/consistency": "~1.0",
+                "hoa/exception": "~1.0"
+            },
+            "require-dev": {
+                "hoa/test": "~2.0"
+            },
+            "suggest": {
+                "ext-iconv": "ext/iconv must be present (or a third implementation) to use Hoa\\Ustring::transcode().",
+                "ext-intl": "To get a better Hoa\\Ustring::toAscii() and Hoa\\Ustring::compareTo()."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\Ustring\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\Ustring library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "library",
+                "search",
+                "string",
+                "unicode"
+            ],
+            "time": "2017-01-16T07:08:25+00:00"
+        },
+        {
+            "name": "hoa/visitor",
+            "version": "2.17.01.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/Visitor.git",
+                "reference": "c18fe1cbac98ae449e0d56e87469103ba08f224a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/Visitor/zipball/c18fe1cbac98ae449e0d56e87469103ba08f224a",
+                "reference": "c18fe1cbac98ae449e0d56e87469103ba08f224a",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/consistency": "~1.0"
+            },
+            "require-dev": {
+                "hoa/test": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\Visitor\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\Visitor library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "library",
+                "structure",
+                "visit",
+                "visitor"
+            ],
+            "time": "2017-01-16T07:02:03+00:00"
+        },
+        {
+            "name": "hoa/zformat",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoaproject/Zformat.git",
+                "reference": "522c381a2a075d4b9dbb42eb4592dd09520e4ac2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoaproject/Zformat/zipball/522c381a2a075d4b9dbb42eb4592dd09520e4ac2",
+                "reference": "522c381a2a075d4b9dbb42eb4592dd09520e4ac2",
+                "shasum": ""
+            },
+            "require": {
+                "hoa/consistency": "~1.0",
+                "hoa/exception": "~1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hoa\\Zformat\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ivan Enderlin",
+                    "email": "ivan.enderlin@hoa-project.net"
+                },
+                {
+                    "name": "Hoa community",
+                    "homepage": "https://hoa-project.net/"
+                }
+            ],
+            "description": "The Hoa\\Zformat library.",
+            "homepage": "https://hoa-project.net/",
+            "keywords": [
+                "library",
+                "parameter",
+                "zformat"
+            ],
+            "time": "2017-01-10T10:39:54+00:00"
+        },
+        {
+            "name": "jms/metadata",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmittjoh/metadata.git",
+                "reference": "521784015ae1e35157c1e7e8960302d8511e4ad7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmittjoh/metadata/zipball/521784015ae1e35157c1e7e8960302d8511e4ad7",
+                "reference": "521784015ae1e35157c1e7e8960302d8511e4ad7",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "doctrine/cache": "^1.0",
+                "doctrine/coding-standard": "^4.0",
+                "phpunit/phpunit": "^7.0",
+                "symfony/cache": "^3.1|^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Metadata\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Asmir Mustafic",
+                    "email": "goetas@gmail.com"
+                },
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Class/method/property metadata management in PHP",
+            "keywords": [
+                "annotations",
+                "metadata",
+                "xml",
+                "yaml"
+            ],
+            "time": "2018-11-13T08:37:37+00:00"
+        },
+        {
+            "name": "jms/serializer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmittjoh/serializer.git",
+                "reference": "4964dcbc7316333cabbd078fa5274414a86738ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/4964dcbc7316333cabbd078fa5274414a86738ce",
+                "reference": "4964dcbc7316333cabbd078fa5274414a86738ce",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/annotations": "^1.0",
+                "doctrine/instantiator": "^1.0.3",
+                "hoa/compiler": "^3.17.08.08",
+                "jms/metadata": "^2.0",
+                "php": "^7.2"
+            },
+            "conflict": {
+                "hoa/consistency": "<1.17.05.02",
+                "hoa/core": "*",
+                "hoa/iterator": "<2.16.03.15"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^5.0",
+                "doctrine/orm": "~2.1",
+                "doctrine/phpcr-odm": "^1.3|^2.0",
+                "ext-pdo_sqlite": "*",
+                "jackalope/jackalope-doctrine-dbal": "^1.1.5",
+                "phpunit/phpunit": "^7.1",
+                "psr/container": "^1.0",
+                "symfony/dependency-injection": "^3.0|^4.0",
+                "symfony/expression-language": "^3.0|^4.0",
+                "symfony/filesystem": "^3.0|^4.0",
+                "symfony/form": "^3.0|^4.0",
+                "symfony/translation": "^3.0|^4.0",
+                "symfony/validator": "^3.1.9|^4.0",
+                "symfony/yaml": "^3.3|^4.0",
+                "twig/twig": "^1.12|^2.0"
+            },
+            "suggest": {
+                "doctrine/cache": "Required if you like to use cache functionality.",
+                "doctrine/collections": "Required if you like to use doctrine collection types as ArrayCollection.",
+                "symfony/yaml": "Required if you'd like to use the YAML metadata format."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JMS\\Serializer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Asmir Mustafic",
+                    "email": "goetas@gmail.com"
+                },
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Library for (de-)serializing data of any complexity; supports XML, JSON, and YAML.",
+            "homepage": "http://jmsyst.com/libs/serializer",
+            "keywords": [
+                "deserialization",
+                "jaxb",
+                "json",
+                "serialization",
+                "xml"
+            ],
+            "time": "2019-01-11T08:46:16+00:00"
+        },
+        {
+            "name": "jms/serializer-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
+                "reference": "851286d85a3d59fcd2c05cc36c23bbc520ac055d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/851286d85a3d59fcd2c05cc36c23bbc520ac055d",
+                "reference": "851286d85a3d59fcd2c05cc36c23bbc520ac055d",
+                "shasum": ""
+            },
+            "require": {
+                "jms/serializer": "^2.0",
+                "php": "^7.2",
+                "symfony/dependency-injection": "^3.3 || ^4.0",
+                "symfony/framework-bundle": "^3.0 || ^4.0"
+            },
+            "require-dev": {
+                "doctrine/orm": "^2.4",
+                "phpunit/phpunit": "^6.0",
+                "symfony/expression-language": "^3.0 || ^4.0",
+                "symfony/finder": "^3.0 || ^4.0",
+                "symfony/form": "^3.0 || ^4.0",
+                "symfony/stopwatch": "^3.0 || ^4.0",
+                "symfony/twig-bundle": "*",
+                "symfony/validator": "^3.0 || ^4.0",
+                "symfony/yaml": "^3.0 || ^4.0"
+            },
+            "suggest": {
+                "jms/di-extra-bundle": "Required to get lazy loading (de)serialization visitors, ^1.3",
+                "symfony/finder": "Required for cache warmup, supported versions ^3.0|^4.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JMS\\SerializerBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Asmir Mustafic",
+                    "email": "goetas@gmail.com"
+                },
+                {
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Allows you to easily serialize, and deserialize data of any complexity",
+            "homepage": "http://jmsyst.com/bundles/JMSSerializerBundle",
+            "keywords": [
+                "deserialization",
+                "json",
+                "serialization",
+                "xml"
+            ],
+            "time": "2019-01-11T08:50:41+00:00"
+        },
+        {
+            "name": "lcobucci/jwt",
+            "version": "3.3.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lcobucci/jwt.git",
+                "reference": "505e0e61b05f1f1773d889ac78e81b412dcc002a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lcobucci/jwt/zipball/505e0e61b05f1f1773d889ac78e81b412dcc002a",
+                "reference": "505e0e61b05f1f1773d889ac78e81b412dcc002a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "php": "^5.6 || ^7.0"
+            },
+            "require-dev": {
+                "mdanter/ecc": "~0.3.1",
+                "mikey179/vfsstream": "~1.5",
+                "phpmd/phpmd": "~2.2",
+                "phpunit/php-invoker": "~1.1",
+                "phpunit/phpunit": "^5.7 || ^7.3",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "suggest": {
+                "mdanter/ecc": "Required to use Elliptic Curves based algorithms."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lcobucci\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Luís Otávio Cobucci Oblonczyk",
+                    "email": "lcobucci@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to work with JSON Web Token and JSON Web Signature",
+            "keywords": [
+                "JWS",
+                "jwt"
+            ],
+            "time": "2019-01-21T12:33:08+00:00"
+        },
+        {
+            "name": "lexik/jwt-authentication-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lexik/LexikJWTAuthenticationBundle.git",
+                "reference": "8c897a098280547871be35954d1d7006a3711d30"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lexik/LexikJWTAuthenticationBundle/zipball/8c897a098280547871be35954d1d7006a3711d30",
+                "reference": "8c897a098280547871be35954d1d7006a3711d30",
+                "shasum": ""
+            },
+            "require": {
+                "ext-openssl": "*",
+                "lcobucci/jwt": "^3.2",
+                "namshi/jose": "^7.2",
+                "php": "^5.5|^7.0",
+                "symfony/framework-bundle": "^3.4|^4.0",
+                "symfony/security-bundle": "^3.4|^4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^1.1|^2.8",
+                "symfony/browser-kit": "^3.4|^4.0",
+                "symfony/console": "^3.4|^4.0",
+                "symfony/dom-crawler": "^3.4|^4.0",
+                "symfony/phpunit-bridge": "^3.4|^4.0",
+                "symfony/var-dumper": "^3.4|^4.0",
+                "symfony/yaml": "^3.4|^4.0"
+            },
+            "suggest": {
+                "gesdinet/jwt-refresh-token-bundle": "Implements a refresh token system over Json Web Tokens in Symfony",
+                "spomky-labs/lexik-jose-bridge": "Provides a JWT Token encoder with encryption support"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Lexik\\Bundle\\JWTAuthenticationBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robin Chalas",
+                    "email": "robin.chalas@gmail.com",
+                    "homepage": "https://github.com/chalasr"
+                },
+                {
+                    "name": "Jeremy Barthe",
+                    "email": "j.barthe@lexik.fr",
+                    "homepage": "https://github.com/jeremyb"
+                },
+                {
+                    "name": "Nicolas Cabot",
+                    "email": "n.cabot@lexik.fr",
+                    "homepage": "https://github.com/slashfan"
+                },
+                {
+                    "name": "Cedric Girard",
+                    "email": "c.girard@lexik.fr",
+                    "homepage": "https://github.com/cedric-g"
+                },
+                {
+                    "name": "Lexik Community",
+                    "homepage": "https://github.com/lexik/LexikJWTAuthenticationBundle/graphs/contributors"
+                },
+                {
+                    "name": "Dev Lexik",
+                    "email": "dev@lexik.fr",
+                    "homepage": "https://github.com/lexik"
+                }
+            ],
+            "description": "This bundle provides JWT authentication for your Symfony REST API",
+            "homepage": "https://github.com/lexik/LexikJWTAuthenticationBundle",
+            "keywords": [
+                "Authentication",
+                "JWS",
+                "api",
+                "bundle",
+                "jwt",
+                "rest",
+                "symfony"
+            ],
+            "time": "2018-12-11T13:09:47+00:00"
+        },
+        {
+            "name": "namshi/jose",
+            "version": "7.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/namshi/jose.git",
+                "reference": "89a24d7eb3040e285dd5925fcad992378b82bcff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/namshi/jose/zipball/89a24d7eb3040e285dd5925fcad992378b82bcff",
+                "reference": "89a24d7eb3040e285dd5925fcad992378b82bcff",
+                "shasum": ""
+            },
+            "require": {
+                "ext-date": "*",
+                "ext-hash": "*",
+                "ext-json": "*",
+                "ext-pcre": "*",
+                "ext-spl": "*",
+                "php": ">=5.5",
+                "symfony/polyfill-php56": "^1.0"
+            },
+            "require-dev": {
+                "phpseclib/phpseclib": "^2.0",
+                "phpunit/phpunit": "^4.5|^5.0",
+                "satooshi/php-coveralls": "^1.0"
+            },
+            "suggest": {
+                "ext-openssl": "Allows to use OpenSSL as crypto engine.",
+                "phpseclib/phpseclib": "Allows to use Phpseclib as crypto engine, use version ^2.0."
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Namshi\\JOSE\\": "src/Namshi/JOSE/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alessandro Nadalin",
+                    "email": "alessandro.nadalin@gmail.com"
+                },
+                {
+                    "name": "Alessandro Cinelli (cirpo)",
+                    "email": "alessandro.cinelli@gmail.com"
+                }
+            ],
+            "description": "JSON Object Signing and Encryption library for PHP.",
+            "keywords": [
+                "JSON Web Signature",
+                "JSON Web Token",
+                "JWS",
+                "json",
+                "jwt",
+                "token"
+            ],
+            "time": "2016-12-05T07:27:31+00:00"
+        },
         {
             "name": "php-amqplib/php-amqplib",
             "version": "dev-master",
@@ -1273,6 +2843,64 @@
             "time": "2019-01-24T21:40:22+00:00"
         },
         {
+            "name": "symfony/inflector",
+            "version": "4.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/inflector.git",
+                "reference": "275e54941a4f17a471c68d2a00e2513fc1fd4a78"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/inflector/zipball/275e54941a4f17a471c68d2a00e2513fc1fd4a78",
+                "reference": "275e54941a4f17a471c68d2a00e2513fc1fd4a78",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Inflector\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bernhard Schussek",
+                    "email": "bschussek@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Inflector Component",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "inflection",
+                "pluralize",
+                "singularize",
+                "string",
+                "symfony",
+                "words"
+            ],
+            "time": "2019-01-16T20:31:39+00:00"
+        },
+        {
             "name": "symfony/mime",
             "version": "dev-master",
             "source": {
@@ -1388,6 +3016,73 @@
             "time": "2018-09-21T13:07:52+00:00"
         },
         {
+            "name": "symfony/property-access",
+            "version": "4.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/property-access.git",
+                "reference": "4768734a803c4471b7a733bd13698d91dd0cf193"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/property-access/zipball/4768734a803c4471b7a733bd13698d91dd0cf193",
+                "reference": "4768734a803c4471b7a733bd13698d91dd0cf193",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/inflector": "~3.4|~4.0"
+            },
+            "require-dev": {
+                "symfony/cache": "~3.4|~4.0"
+            },
+            "suggest": {
+                "psr/cache-implementation": "To cache access methods."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\PropertyAccess\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony PropertyAccess Component",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "access",
+                "array",
+                "extraction",
+                "index",
+                "injection",
+                "object",
+                "property",
+                "property path",
+                "reflection"
+            ],
+            "time": "2019-01-16T20:31:39+00:00"
+        },
+        {
             "name": "symfony/routing",
             "version": "dev-master",
             "source": {
@@ -1463,6 +3158,394 @@
                 "url"
             ],
             "time": "2019-01-26T20:52:17+00:00"
+        },
+        {
+            "name": "symfony/security-bundle",
+            "version": "4.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/security-bundle.git",
+                "reference": "0e1c9003830c5da614e58bd74b2fd0bb7c4569d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/security-bundle/zipball/0e1c9003830c5da614e58bd74b2fd0bb7c4569d6",
+                "reference": "0e1c9003830c5da614e58bd74b2fd0bb7c4569d6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xml": "*",
+                "php": "^7.1.3",
+                "symfony/config": "^4.2",
+                "symfony/dependency-injection": "^4.2",
+                "symfony/http-kernel": "^4.1",
+                "symfony/security-core": "~4.2",
+                "symfony/security-csrf": "~4.2",
+                "symfony/security-guard": "~4.2",
+                "symfony/security-http": "~4.2"
+            },
+            "conflict": {
+                "symfony/browser-kit": "<4.2",
+                "symfony/console": "<3.4",
+                "symfony/event-dispatcher": "<3.4",
+                "symfony/framework-bundle": "<4.2",
+                "symfony/twig-bundle": "<4.2",
+                "symfony/var-dumper": "<3.4"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "~1.5",
+                "symfony/asset": "~3.4|~4.0",
+                "symfony/browser-kit": "~4.2",
+                "symfony/console": "~3.4|~4.0",
+                "symfony/css-selector": "~3.4|~4.0",
+                "symfony/dom-crawler": "~3.4|~4.0",
+                "symfony/event-dispatcher": "~3.4|~4.0",
+                "symfony/expression-language": "~3.4|~4.0",
+                "symfony/form": "~3.4|~4.0",
+                "symfony/framework-bundle": "~4.2",
+                "symfony/http-foundation": "~3.4|~4.0",
+                "symfony/process": "~3.4|~4.0",
+                "symfony/translation": "~3.4|~4.0",
+                "symfony/twig-bridge": "~3.4|~4.0",
+                "symfony/twig-bundle": "~4.2",
+                "symfony/validator": "~3.4|~4.0",
+                "symfony/var-dumper": "~3.4|~4.0",
+                "symfony/yaml": "~3.4|~4.0",
+                "twig/twig": "~1.34|~2.4"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bundle\\SecurityBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony SecurityBundle",
+            "homepage": "https://symfony.com",
+            "time": "2019-01-16T20:35:37+00:00"
+        },
+        {
+            "name": "symfony/security-core",
+            "version": "4.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/security-core.git",
+                "reference": "4c3a89faf2fafe438082051c1a9623c54f5aefab"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/security-core/zipball/4c3a89faf2fafe438082051c1a9623c54f5aefab",
+                "reference": "4c3a89faf2fafe438082051c1a9623c54f5aefab",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/contracts": "^1.0"
+            },
+            "require-dev": {
+                "psr/container": "^1.0",
+                "psr/log": "~1.0",
+                "symfony/event-dispatcher": "~3.4|~4.0",
+                "symfony/expression-language": "~3.4|~4.0",
+                "symfony/http-foundation": "~3.4|~4.0",
+                "symfony/ldap": "~3.4|~4.0",
+                "symfony/validator": "~3.4|~4.0"
+            },
+            "suggest": {
+                "psr/container-implementation": "To instantiate the Security class",
+                "symfony/event-dispatcher": "",
+                "symfony/expression-language": "For using the expression voter",
+                "symfony/http-foundation": "",
+                "symfony/ldap": "For using LDAP integration",
+                "symfony/validator": "For using the user password constraint"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Security\\Core\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Security Component - Core Library",
+            "homepage": "https://symfony.com",
+            "time": "2019-01-24T21:39:51+00:00"
+        },
+        {
+            "name": "symfony/security-csrf",
+            "version": "4.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/security-csrf.git",
+                "reference": "385dcfcd6cf02e0b8d10524bd072169be2d5494b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/security-csrf/zipball/385dcfcd6cf02e0b8d10524bd072169be2d5494b",
+                "reference": "385dcfcd6cf02e0b8d10524bd072169be2d5494b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/security-core": "~3.4|~4.0"
+            },
+            "conflict": {
+                "symfony/http-foundation": "<3.4"
+            },
+            "require-dev": {
+                "symfony/http-foundation": "~3.4|~4.0"
+            },
+            "suggest": {
+                "symfony/http-foundation": "For using the class SessionTokenStorage."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Security\\Csrf\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Security Component - CSRF Library",
+            "homepage": "https://symfony.com",
+            "time": "2019-01-16T20:31:39+00:00"
+        },
+        {
+            "name": "symfony/security-guard",
+            "version": "4.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/security-guard.git",
+                "reference": "0591f591f82a8a394d4e362408da9574607bf01e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/security-guard/zipball/0591f591f82a8a394d4e362408da9574607bf01e",
+                "reference": "0591f591f82a8a394d4e362408da9574607bf01e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/security-core": "~3.4|~4.0",
+                "symfony/security-http": "~3.4|~4.0"
+            },
+            "require-dev": {
+                "psr/log": "~1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Security\\Guard\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Security Component - Guard",
+            "homepage": "https://symfony.com",
+            "time": "2019-01-16T20:31:39+00:00"
+        },
+        {
+            "name": "symfony/security-http",
+            "version": "4.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/security-http.git",
+                "reference": "b564efb51c5355bd83e3aad231a0d87a307002ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/security-http/zipball/b564efb51c5355bd83e3aad231a0d87a307002ad",
+                "reference": "b564efb51c5355bd83e3aad231a0d87a307002ad",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/event-dispatcher": "~3.4|~4.0",
+                "symfony/http-foundation": "~3.4|~4.0",
+                "symfony/http-kernel": "~3.4|~4.0",
+                "symfony/property-access": "~3.4|~4.0",
+                "symfony/security-core": "~3.4|~4.0"
+            },
+            "conflict": {
+                "symfony/security-csrf": "<3.4.11|~4.0,<4.0.11"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/routing": "~3.4|~4.0",
+                "symfony/security-csrf": "^3.4.11|^4.0.11"
+            },
+            "suggest": {
+                "symfony/routing": "For using the HttpUtils class to create sub-requests, redirect the user, and match URLs",
+                "symfony/security-csrf": "For using tokens to protect authentication/logout attempts"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Security\\Http\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Security Component - HTTP Integration",
+            "homepage": "https://symfony.com",
+            "time": "2019-01-16T21:31:25+00:00"
+        },
+        {
+            "name": "symfony/templating",
+            "version": "4.2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/templating.git",
+                "reference": "e1de3b189a2eb94b963cd2ee807f815777340fe0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/templating/zipball/e1de3b189a2eb94b963cd2ee807f815777340fe0",
+                "reference": "e1de3b189a2eb94b963cd2ee807f815777340fe0",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/polyfill-ctype": "~1.8"
+            },
+            "require-dev": {
+                "psr/log": "~1.0"
+            },
+            "suggest": {
+                "psr/log-implementation": "For using debug logging in loaders"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Templating\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Templating Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-01-16T20:31:39+00:00"
         },
         {
             "name": "symfony/var-exporter",
@@ -1582,18 +3665,115 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2019-01-16T20:35:37+00:00"
+        },
+        {
+            "name": "willdurand/jsonp-callback-validator",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willdurand/JsonpCallbackValidator.git",
+                "reference": "1a7d388bb521959e612ef50c5c7b1691b097e909"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willdurand/JsonpCallbackValidator/zipball/1a7d388bb521959e612ef50c5c7b1691b097e909",
+                "reference": "1a7d388bb521959e612ef50c5c7b1691b097e909",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~3.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "JsonpCallbackValidator": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "william.durand1@gmail.com",
+                    "homepage": "http://www.willdurand.fr"
+                }
+            ],
+            "description": "JSONP callback validator.",
+            "time": "2014-01-20T22:35:06+00:00"
+        },
+        {
+            "name": "willdurand/negotiation",
+            "version": "2.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willdurand/Negotiation.git",
+                "reference": "cf78c9ac47e8e1e141bf609c71e9e2c3a7780dcf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willdurand/Negotiation/zipball/cf78c9ac47e8e1e141bf609c71e9e2c3a7780dcf",
+                "reference": "cf78c9ac47e8e1e141bf609c71e9e2c3a7780dcf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Negotiation\\": "src/Negotiation"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "will+git@drnd.me"
+                }
+            ],
+            "description": "Content Negotiation tools for PHP provided as a standalone library.",
+            "homepage": "http://williamdurand.fr/Negotiation/",
+            "keywords": [
+                "accept",
+                "content",
+                "format",
+                "header",
+                "negotiation"
+            ],
+            "time": "2017-08-04T15:54:30+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "friendsofsymfony/rest-bundle": 20,
+        "jms/serializer-bundle": 20,
+        "lexik/jwt-authentication-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.1",
         "ext-ctype": "*",
-        "ext-iconv": "*"
+        "ext-iconv": "*",
+        "ext-sockets": "*"
     },
     "platform-dev": []
 }
