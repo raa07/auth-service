@@ -1,0 +1,3 @@
+index:
+    path: /test
+    controller: App\AnalyticsBundle\Producer\DataSenderProducer::index

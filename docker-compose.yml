@@ -2,6 +2,9 @@ version: "3"
 services:
   auth-web:
     build: docker/nginx
+    depends_on:
+      - auth-backend
+    restart: always
     ports:
       - 127.0.0.1:80:80
 # uncomment lines if you need local files share
@@ -10,24 +13,33 @@ services:
 
   auth-backend:
     build: .
+    depends_on:
+      - rabbitmq
+    restart: always
     volumes:
        - auth-store:/app/storage # comment this line if you need local files share
 #       - ./:/app/:cached # uncomment this line if you need local files share
+    command: bin/console rabbitmq:consumer --no-interaction send_email
 
-  auth-worker:
-    build: .
-    volumes:
-       - auth-store:/app/storage # comment this line if you need local files share
-#       - ./:/app/:cached # uncomment this line if you need local files share
-    command: ['./bin/hello-worker']
+#  auth-worker:
+#    build: .
+#    volumes:
+#       - auth-store:/app/storage # comment this line if you need local files share
+##       - ./:/app/:cached # uncomment this line if you need local files share
+#    command: ['./bin/hello-worker']
 
   rabbitmq:
     image: rabbitmq:3.7-management-alpine
+    hostname: "rabbitmq"
     ports:
+      - "5672:5672"
       -  127.0.0.1:15672:15672
-      -  127.0.0.1:5672:5672
+#     -  127.0.0.1:5672:5672
+#      - "5672:5672"
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
+    labels:
+      NAME: "rabbitmq"
 
 volumes:
   auth-store:

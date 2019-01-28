@@ -1,0 +1,26 @@
+old_sound_rabbit_mq:
+  connections:
+    default:
+      host:     'rabbitmq'
+      port:     5672
+      user:     'guest'
+      password: 'guest'
+      vhost:    '/'
+      lazy:     false
+      connection_timeout: 60
+      read_write_timeout: 60
+#      keepalive: false
+#      heartbeat: 0
+      use_socket: true
+  producers:
+    send_email:
+      connection:       default
+      exchange_options: { name: 'notification.v1.send_email', type: direct }
+
+  consumers:
+    send_email:
+      connection:       default
+      exchange_options: { name: 'notification.v1.send_email', type: direct }
+      queue_options:    { name: 'notification.v1.send_email' }
+      callback:         app.consumer.data_sender
+      enable_logger: true
