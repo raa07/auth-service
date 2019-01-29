@@ -6,14 +6,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * Class NotificationConsumer
- */
 class DataSenderProducer extends AbstractController
 {
-    public function index(ProducerInterface $producer)
+    private $producer;
+
+    public function __construct(ProducerInterface $producer)
     {
-        $producer->publish('asdfasdfasdfasdf');
-        return new Response('asdfasdf');
+        $this->producer = $producer;
+    }
+
+    public function sendData(array $data) : void
+    {
+        $json = json_encode($data);
+        $this->producer->publish($json);
     }
 }
