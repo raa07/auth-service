@@ -4,22 +4,25 @@ namespace App\UserBundle\Repository;
 
 use App\UserBundle\Entity\User;
 use App\UserBundle\Manager\EntityManagerInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class UserRepository implements ObjectRepository
 {
     private $em;
     private $class;
+    private $fileSys;
 
-    public function __construct(EntityManagerInterface $em, string $class)
+    public function __construct(EntityManagerInterface $em, string $class, Filesystem $fileSys)
     {
         $this->em         = $em;
         $this->class      = $class;
+        $this->fileSys = $fileSys;
     }
 
     public function find($id)
     {
-
-        // TODO: Implement find() method.
+        return $this->getFromStorage($id);
     }
 
     public function findAll()
@@ -37,13 +40,43 @@ class UserRepository implements ObjectRepository
         // TODO: Implement findOneBy() method.
     }
 
-    public function save(User $user)
+    public function loadUserByUsername(string $nickname)
     {
-
+        $id = $this->nicknameToId($nickname);
+        return $this->getFromStorage($id);
     }
 
-    private function getFromStorage(string $id)
+    public function save(User $user) : string
     {
+        $nickname = $user->getNickname();
+        $id = $this->nicknameToId($nickname);
+        if ($this->getFromStorage($id)) {
+            throw new \Exception('Nickname is not uniq');
+        }
+        $data = $user->toArray();
+        $this->saveToStorage($id, $data);
+        return $id;
+    }
 
+    private function getFromStorage(string $id) : array
+    {
+        $path = '/storage/users/' . $id . '.json';
+        if (!$this->fileSys->exists($path)) {
+            return [];
+        }
+        $data = file_get_contents($path);
+        return (array) json_decode($data);
+    }
+
+    private function saveToStorage(string $id, array $data) : bool
+    {
+        $json = json_encode($data);
+        $path = '/storage/users/' . $id . '.json';
+        return (bool) file_put_contents($path, $json);
+    }
+
+    private function nicknameToId(string $nickname) : string
+    {
+        return password_hash($nickname, PASSWORD_BCRYPT);
     }
 }

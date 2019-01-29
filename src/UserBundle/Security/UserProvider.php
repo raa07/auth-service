@@ -2,32 +2,26 @@
 
 namespace App\UserBundle\Security;
 
+use App\UserBundle\Repository\UserRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use App\UserBundle\Entity\User;
 
 class UserProvider implements UserProviderInterface
 {
-    /**
-     * Symfony calls this method if you use features like switch_user
-     * or remember_me.
-     *
-     * If you're not using these features, you do not need to implement
-     * this method.
-     *
-     * @return UserInterface
-     *
-     * @throws UsernameNotFoundException if the user is not found
-     */
+    private $repo;
+
+    public function __construct(UserRepository $repo)
+    {
+        $this->repo = $repo;
+    }
+
     public function loadUserByUsername($username)
     {
-        // Load a User object from your data source or throw UsernameNotFoundException.
-        // The $username argument may not actually be a username:
-        // it is whatever value is being returned by the getUsername()
-        // method in your User class.
-        throw new \Exception('TODO: fill in loadUserByUsername() inside '.__FILE__);
+        $array = $this->repo->loadUserByUsername($username);
+
+        return new User(...$array);
     }
 
     /**

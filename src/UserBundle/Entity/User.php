@@ -6,26 +6,30 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class User implements UserInterface
 {
+    private $id;
     private $nickname;
     private $firstName;
     private $lastName;
     private $age;
+    private $password;
 
     private $roles = [];
 
-    /**
-     * @var string The hashed password
-     */
-    private $password;
 
     // не хочу использовать никакой магии в виде динамическх аргументов и тд
-    public function __construct(string $nickname, string $firstName, string $lastName, int $age, string $password)
+    public function __construct(string $id, string $nickname, string $firstName, string $lastName, int $age, string $password)
     {
+        $this->id = $id;
         $this->nickname = $nickname;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->age = $age;
         $this->password = $password;
+    }
+
+    public function getId() : string
+    {
+        return $this->id;
     }
 
     public function getNickname(): ?string
@@ -139,6 +143,7 @@ class User implements UserInterface
     public function toArray()
     {
         return [
+            'id' => $this->id,
             'nickname' => $this->nickname,
             'lastname' => $this->lastName,
             'firstname' => $this->firstName,
