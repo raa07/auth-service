@@ -3,14 +3,44 @@
 namespace App\UserBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class User implements UserInterface
 {
+    /**
+     * @Assert\NotBlank
+     * @Assert\Length(min=3)
+     */
     private $id;
+
+    /**
+     * @Assert\NotBlank
+     * @Assert\Length(min=3)
+     */
     private $nickname;
+
+    /**
+     * @Assert\NotBlank
+     * @Assert\Length(min=3)
+     */
     private $firstName;
+
+    /**
+     * @Assert\NotBlank
+     * @Assert\Length(min=3)
+     */
     private $lastName;
+
+    /**
+     * @Assert\NotBlank
+     * @Assert\Length(min=3)
+     */
     private $age;
+
+    /**
+     * @Assert\UserPassword
+     * @Assert\Length(min=3)
+     */
     private $password;
 
     private $roles = [];

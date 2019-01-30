@@ -63,7 +63,8 @@
     "symfony": {
       "allow-contrib": false,
       "require": "4.2.*"
-    }
+    },
+    "public-dir": "web"
   },
   "repositories": [
     {

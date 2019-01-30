@@ -41,7 +41,7 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
         );
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function getUser($credentials)
     {
         try {
             $data = $this->jwtEncoder->decode($credentials);
@@ -50,9 +50,8 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
         }
 
         $nickname = $data['nickname'];
-//        return $this->em->getRepository(User::class)
-//            ->findOneBy(['apiToken' => $apiToken]);
-        return new User();
+        return $this->em->getRepository(User::class)
+            ->loadUserByUsername($nickname);
     }
 
     public function checkCredentials($credentials, UserInterface $user)

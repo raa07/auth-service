@@ -12,12 +12,14 @@ class UserRepository implements ObjectRepository
     private $em;
     private $class;
     private $fileSys;
+    private $usersDir;
 
-    public function __construct(EntityManagerInterface $em, string $class, Filesystem $fileSys)
+    public function __construct(EntityManagerInterface $em, string $class, Filesystem $fileSys, $usersDir)
     {
         $this->em         = $em;
         $this->class      = $class;
         $this->fileSys = $fileSys;
+        $this->usersDir = $usersDir;
     }
 
     public function find($id)
@@ -60,7 +62,7 @@ class UserRepository implements ObjectRepository
 
     private function getFromStorage(string $id) : array
     {
-        $path = '/storage/users/' . $id . '.json';
+        $path = $this->usersDir . $id . '.json';
         if (!$this->fileSys->exists($path)) {
             return [];
         }
@@ -71,7 +73,7 @@ class UserRepository implements ObjectRepository
     private function saveToStorage(string $id, array $data) : bool
     {
         $json = json_encode($data);
-        $path = '/storage/users/' . $id . '.json';
+        $path = $this->usersDir . $id . '.json';
         return (bool) file_put_contents($path, $json);
     }
 

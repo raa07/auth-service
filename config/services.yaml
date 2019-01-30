@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+  users_dir: '%kernel.project_dir%/storage/users'
+  analytics_dir: '%kernel.project_dir%/storage/analytics'
 
 services:
     # default configuration for services in *this* file
@@ -23,8 +25,14 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\UserBundle\Repository\UserRepository:
+      arguments:
+        $usersDir: '%users_dir%'
+
+    App\AnalyticsBundle\Consumer\DataSenderConsumer:
+      arguments:
+        $analyticsDir: '%analytics_dir%'
+
     app.consumer.data_sender:
         class: App\AnalyticsBundle\Consumer\DataSenderConsumer
 #    old_sound.rabbit_mq_bundle.rabbit_mq.producer:
