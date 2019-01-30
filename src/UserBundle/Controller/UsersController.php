@@ -22,8 +22,10 @@ class UsersController
 
     public function newAction(Request $request)
     {
-        $user = new User('test', 'test', 'test', 'test', 10, 'test');
+        $user = new User();
+        $user->create('test', 'test_test', 'test', 'test', 10);
+        $user = $this->userRepo->encodePassword($user, 'test');
         $this->userRepo->save($user);
-        return new View(['result' => 'User created'], 200);
+        return new View(['success' => 'true', 'data' => ['message' => 'User created']], 200);
     } // "new_users"     [GET] /users/new
 }

@@ -16,44 +16,65 @@ use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\AuthorizationHeaderTokenExtractor;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTDecodeFailureException;
+use Lexik\Bundle\JWTAuthenticationBundle\Security\Authentication\Token\PreAuthenticationJWTUserToken;
+use Lexik\Bundle\JWTAuthenticationBundle\Exception\InvalidTokenException;
+use Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 class JwtTokenAuthenticator extends AbstractGuardAuthenticator
 {
     private $em;
     private $jwtEncoder;
+    private $jwtManager;
 
-    public function __construct(JWTEncoderInterface $jwtEncoder, EntityManagerInterface $em)
+    public function __construct(JWTTokenManagerInterface $jwtManager, JWTEncoderInterface $jwtEncoder, EntityManagerInterface $em)
     {
+        $this->jwtManager = $jwtManager;
         $this->em = $em;
         $this->jwtEncoder = $jwtEncoder;
     }
 
     public function supports(Request $request)
     {
-        return $request->headers->has('X-AUTH-TOKEN');
+        return $request->headers->has('Authorization');
     }
 
     public function getCredentials(Request $request)
     {
-        $extractor = new AuthorizationHeaderTokenExtractor(
-            'Bearer',
-            'Authorization'
-        );
+        $jsonWebToken = $request->headers->get('Authorization');
+        $preAuthToken = new PreAuthenticationJWTUserToken($jsonWebToken);
+        try {
+            if (!$payload = $this->jwtManager->decode($preAuthToken)) {
+                throw new InvalidTokenException('Invalid JWT Token');
+            }
+            $preAuthToken->setPayload($payload);
+        } catch (JWTDecodeFailureException $e) {
+            if (JWTDecodeFailureException::EXPIRED_TOKEN === $e->getReason()) {
+                throw new ExpiredTokenException();
+            }
+            throw new InvalidTokenException('Invalid JWT Token', 0, $e);
+        }
+        return $preAuthToken;
+
     }
 
-    public function getUser($credentials)
+    public function getUser($preAuthToken, UserProviderInterface $userProvider)
     {
-        try {
-            $data = $this->jwtEncoder->decode($credentials);
-        } catch (JWTDecodeFailureException $e) {
-            throw new CustomUserMessageAuthenticationException('Invalid Token');
-        }
+        $data = $preAuthToken->getPayload();
 
         $nickname = $data['nickname'];
-        return $this->em->getRepository(User::class)
-            ->loadUserByUsername($nickname);
+        return $userProvider->loadUserByUsername($nickname);
     }
 
+    public function getUserIfAuthenticated(Request $request, UserProviderInterface $userProvider)
+    {
+        try {
+            $creads = $this->getCredentials($request);
+            return $this->getUser($creads, $userProvider);
+        } catch (\Exception $exception) {
+            return [];
+        }
+    }
     public function checkCredentials($credentials, UserInterface $user)
     {
         return true;

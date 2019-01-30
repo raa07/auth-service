@@ -21,7 +21,6 @@ services:
     volumes:
        - auth-store:/app/storage # comment this line if you need local files share
 #       - ./:/app/:cached # uncomment this line if you need local files share
-#    command: bin/console rabbitmq:consumer --no-interaction -m 10 send_email
 
   auth-worker:
     build: .

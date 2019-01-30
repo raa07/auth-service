@@ -3,14 +3,12 @@
 namespace App\AnalyticBundle\Controller;
 
 use App\AnalyticBundle\Producer\DataSenderProducer;
-use Symfony\Component\HttpFoundation\Response;
+use App\UserBundle\Security\JwtTokenAuthenticator;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
-use FOS\RestBundle\View\View;
-use App\UserBundle\Security\JwtTokenAuthenticator;
-use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Lexik\Bundle\JWTAuthenticationBundle\Encoder\LcobucciJWTEncoder;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
  * @RouteResource("Analytics")
@@ -21,28 +19,30 @@ class AnalyticsController
 
     private $producer;
     private $response;
-    private $tokenEncoder;
+    private $userProvider;
+    private $tokenAuthenticator;
 
-    public function __construct(DataSenderProducer $dataSenderProducer, LcobucciJWTEncoder $tokenEncoder)
+    public function __construct(DataSenderProducer $dataSenderProducer, UserProviderInterface $userProvider, JwtTokenAuthenticator $tokenAuthenticator)
     {
         $this->producer = $dataSenderProducer;
         $this->response = new JsonResponse();
-        $this->tokenEncoder = $tokenEncoder;
+        $this->userProvider = $userProvider;
+        $this->tokenAuthenticator = $tokenAuthenticator;
     }
 
-    public function saveDataAction(Request $request)
+    public function newAction(Request $request)
     {
-        $token = '';
-        if ($token) {
-            $payload = $this->tokenEncoder->decode($token);
-            $id_user = $payload['id'];
+
+        $user = $this->tokenAuthenticator->getUserIfAuthenticated($request, $this->userProvider);
+        if (!empty($user)){
+            $id_user = $user->getUsername();
         } else {
-            $id_user = $this->setUniqId();
+            $id_user = $this->getUniqId($request);
         }
 
-        $sourceLabel = $request->request->get('source_label');;
+        $sourceLabel = $request->query->get('source_label');
 
-        $data = [
+        $data = [ //TODO: replace
             'id' => uniqid('hit_', true),
             'id_user' => $id_user,
             'date' => date('Y-m-d H:i:s'),
@@ -51,7 +51,7 @@ class AnalyticsController
 
         $this->producer->sendData($data);
 
-        $this->response->setData(['result' => 'done']);
+        $this->response->setData(['success' => 'true', 'data' => ['message' => 'hit recovered']]);
         return $this->response;
     }
 

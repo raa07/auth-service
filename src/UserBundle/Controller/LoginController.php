@@ -2,7 +2,6 @@
 
 namespace App\UserBundle\Controller;
 
-use App\UserBundle\Entity\User;
 use App\UserBundle\Security\UserProvider;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +10,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Encoder\LcobucciJWTEncoder;
 use \Exception;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
-
+use FOS\RestBundle\Exception as FosException;
 /**
  * @RouteResource("Login", pluralize=false)
  */
@@ -28,23 +27,31 @@ class LoginController
         $this->userProvider = $userProvider;
     }
 
-    public function cgetAction(Request $request): Response
+//    /**
+//     * @Post()
+//     */
+    public function cgetAction(Request $request)
     {
-        $nickname = 'test';
-        $user = $this->userProvider->loadUserByUsername($nickname);
-        if (!$user) {
-            throw new Exception('Not found user with this creds');
+        $nickname = $request->query->get('nickname', '');
+        $password = $request->query->get('password', '');
+
+        try {
+            $user = $this->userProvider->loadUserByUsername($nickname);
+        } catch (Exception $exception) {
+            throw new FosException('Not found user with this creds');
         }
         $isValid = $this->passEncoder
-            ->isPasswordValid($user, $request->getPassword());
+            ->isPasswordValid($user, $password);
+        if (!$isValid) {
+            throw new FosException('Password is wrong');
+        }
 
-
-        $token = $this->tokenEncoder->encode([
+        $token = $this->tokenEncoder->encode([ // TODO: replace
             'nickname' => $user->getNickname(),
             'id' => $user->getId(),
             'exp' => time() + 36000 // 10 hour expiration
         ]);
 
-        return new View(['token' => $token], 200); //TODO:refactor
+        return new View(['success' => 'true', 'data' => ['token' => $token]], 200);
     }
 }

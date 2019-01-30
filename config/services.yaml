@@ -8,19 +8,15 @@ parameters:
   analytics_dir: '%kernel.project_dir%/storage/analytics'
 
 services:
-    # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
+
     App\:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-    # controllers are imported separately to make sure services can be injected
-    # as action arguments even if you don't extend any base controller class
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
@@ -40,22 +36,17 @@ services:
         autowire: true
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
-    App\UserBundle\Repository\UserRepository:
+    App\UserBundle\Manager\UserJsonManager:
+      public: true
       arguments:
         $usersDir: '%users_dir%'
 
-    App\AnalyticsBundle\Consumer\DataSenderConsumer:
-      arguments:
-        $analyticsDir: '%analytics_dir%'
-
-    App\UserBundle\Manager\UserJsonManager:
-          arguments:
-            $usersDir: '%users_dir%'
-
     app.consumer.data_sender:
         class: App\AnalyticBundle\Consumer\DataSenderConsumer
+        public: true
+        arguments:
+          $analyticsDir: '%analytics_dir%'
+    App\AnalyticBundle\Consumer\DataSenderConsumer: '@app.consumer.data_sender'
 
     social_tech.slow_storage:
         class: SocialTech\SlowStorage
@@ -63,6 +54,10 @@ services:
 
     app.user_bundle.repository.user_repository:
         class: App\UserBundle\Repository\UserRepository
+        public: true
+        arguments:
+          $usersDir: '%users_dir%'
+    App\UserBundle\Repository\UserRepository: '@app.user_bundle.repository.user_repository'
 
     OldSound\RabbitMqBundle\RabbitMq\ProducerInterface: '@old_sound_rabbit_mq.send_email_producer'
 

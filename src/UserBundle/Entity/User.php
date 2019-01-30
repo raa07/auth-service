@@ -45,18 +45,6 @@ class User implements UserInterface
 
     private $roles = [];
 
-
-    // не хочу использовать никакой магии в виде динамическх аргументов и тд
-    public function __construct(string $id, string $nickname, string $firstName, string $lastName, int $age, string $password)
-    {
-        $this->id = $id;
-        $this->nickname = $nickname;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->age = $age;
-        $this->password = $password;
-    }
-
     public function getId() : string
     {
         return $this->id;
@@ -180,5 +168,18 @@ class User implements UserInterface
             'age' => $this->age,
             'password' => $this->password
         ];
+    }
+
+    // не хочу использовать никакой магии в виде динамическх аргументов и тд
+    public function create(string $id, string $nickname, string $firstName, string $lastName, int $age, string $password='') : User
+    {
+        $this->id = $id;
+        $this->nickname = $nickname;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->age = $age;
+        $this->password = $password;
+
+        return $this;
     }
 }

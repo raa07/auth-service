@@ -6,18 +6,21 @@ use App\UserBundle\Entity\User;
 use App\UserBundle\Manager\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserRepository implements ObjectRepository
 {
     private $em;
     private $fileSys;
     private $usersDir;
+    private $passwordEncoder;
 
-    public function __construct(EntityManagerInterface $em, Filesystem $fileSys, $usersDir)
+    public function __construct(EntityManagerInterface $em, Filesystem $fileSys, string $usersDir, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->em         = $em;
         $this->fileSys = $fileSys;
         $this->usersDir = $usersDir;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function find($id)
@@ -50,6 +53,9 @@ class UserRepository implements ObjectRepository
     {
         $nickname = $user->getNickname();
         $id = $this->nicknameToId($nickname);
+        if (empty($user->getPassword())) {
+            throw new \Exception('Empty password');
+        }
         if ($this->getFromStorage($id)) {
             throw new \Exception('Nickname is not uniq');
         }
@@ -58,9 +64,16 @@ class UserRepository implements ObjectRepository
         return $id;
     }
 
+    public function encodePassword(User $user, string $password) : User
+    {
+        $encoded = $this->passwordEncoder->encodePassword($user, $password);
+        $user->setPassword($encoded);
+        return $user;
+    }
+
     private function getFromStorage(string $id) : array
     {
-        $path = $this->usersDir . $id . '.json';
+        $path = $this->usersDir . '/' . $id . '.json';
         if (!$this->fileSys->exists($path)) {
             return [];
         }
@@ -71,8 +84,8 @@ class UserRepository implements ObjectRepository
     private function saveToStorage(string $id, array $data) : bool
     {
         $json = json_encode($data);
-        $path = $this->usersDir . $id . '.json';
-        $this->fileSys->mkdir('/app/storage/users', 0700);
+        $path = $this->usersDir . '/' . $id . '.json';
+        $this->fileSys->mkdir($this->usersDir, 0700);
         return (bool) file_put_contents($path, $json);
     }
 

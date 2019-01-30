@@ -20,9 +20,13 @@ class UserProvider implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         $array = $this->repo->loadUserByUsername($username);
+        if (empty($array)) {
+            throw new \Exception('User dont found');
+        }
         $array = array_values($array);
 
-        return new User(...$array);
+        $user = new User();
+        return $user->create(...$array);
     }
 
     /**

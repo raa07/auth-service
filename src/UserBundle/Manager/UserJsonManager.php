@@ -17,7 +17,7 @@ class UserJsonManager implements EntityManagerInterface
     public function getRepository($className)
     {
         $fileSystem = new Filesystem();
-        return new UserRepository($this, $className, $fileSystem, $this->usersDir);
+        return new UserRepository($this, $fileSystem, $this->usersDir);
     }
 
     public function find($className, $id)
