@@ -33,6 +33,10 @@ services:
       arguments:
         $analyticsDir: '%analytics_dir%'
 
+    App\UserBundle\Manager\UserJsonManager:
+          arguments:
+            $usersDir: '%users_dir%'
+
     app.consumer.data_sender:
         class: App\AnalyticsBundle\Consumer\DataSenderConsumer
 #    old_sound.rabbit_mq_bundle.rabbit_mq.producer:
