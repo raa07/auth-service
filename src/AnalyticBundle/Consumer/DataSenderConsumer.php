@@ -1,10 +1,11 @@
 <?php
 
-namespace App\AnalyticsBundle\Consumer;
+namespace App\AnalyticBundle\Consumer;
 
 
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
+use SocialTech\StorageInterface;
 /**
  * Class NotificationConsumer
  */
@@ -21,7 +22,7 @@ class DataSenderConsumer implements ConsumerInterface
     {
         $json = $msg->getBody();
         $data = json_decode($json, true);
-        $name = '/app/storage/analytic/' . $data['id'] . '.json'; //path fix
+        $name = '/app/storage/analytic/' . $data['id'] . '.json'; //path fix TODO:refactor
         if ($this->slowStorage->exit($name)) {
             throw new \Exception('Duplicate');
         }

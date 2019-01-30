@@ -23,13 +23,36 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\UserBundle\Controller\UsersController:
+        class: App\UserBundle\Controller\UsersController
+        autowire: true
+        tags: ['controller.service_arguments']
+
+    App\UserBundle\Controller\LoginController:
+        class: App\UserBundle\Controller\LoginController
+        autowire: true
+        tags: ['controller.service_arguments']
+
+    App\AnalyticBundle\Controller\AnalyticsController:
+        class: App\AnalyticBundle\Controller\AnalyticsController
+        autowire: true
+        tags: ['controller.service_arguments']
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
     app.consumer.data_sender:
-        class: App\AnalyticsBundle\Consumer\DataSenderConsumer
-#    old_sound.rabbit_mq_bundle.rabbit_mq.producer:
-#        class: OldSound\RabbitMqBundle\RabbitMq\Producer
-#        arguments: [PhpAmqpLib\Connection\AbstractConnection, PhpAmqpLib\Channel\AMQPChannel]
+        class: App\AnalyticBundle\Consumer\DataSenderConsumer
+
+    social_tech.slow_storage:
+        class: SocialTech\SlowStorage
+    SocialTech\StorageInterface: '@social_tech.slow_storage'
+
+    app.user_bundle.repository.user_repository:
+        class: App\UserBundle\Repository\UserRepository
+    App\UserBundle\Repository\UserRepository: '@app.user_bundle.repository.user_repository'
+
     OldSound\RabbitMqBundle\RabbitMq\ProducerInterface: '@old_sound_rabbit_mq.send_email_producer'
-#    OldSound\RabbitMqBundle\RabbitMq\Producer:
-#        autowire: true
+
+    lexik.bundle.jwt_authentication_bundle.encoder.lcobucci_jwt_encoder:
+        class: Lexik\Bundle\JWTAuthenticationBundle\Encoder\LcobucciJWTEncoder
+    Lexik\Bundle\JWTAuthenticationBundle\Encoder\LcobucciJWTEncoder: '@lexik.bundle.jwt_authentication_bundle.encoder.lcobucci_jwt_encoder'

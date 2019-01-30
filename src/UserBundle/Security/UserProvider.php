@@ -20,6 +20,7 @@ class UserProvider implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         $array = $this->repo->loadUserByUsername($username);
+        $array = array_values($array);
 
         return new User(...$array);
     }

@@ -6,10 +6,6 @@ RUN apk update
 # Set the WORKDIR to /app so all following commands run in /app
 WORKDIR /app
 
-RUN docker-php-ext-install bcmath
-RUN docker-php-ext-install sockets
-RUN docker-php-ext-enable sockets
-
 COPY composer.json composer.lock
 
 # Install Composer and make it available in the PATH
@@ -20,7 +16,7 @@ COPY composer.json composer.lock ./
 
 # Install dependencies with Composer.
 # --no-interaction makes sure composer can run fully automated
-RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev
+RUN composer install --no-interaction --prefer-dist --no-scripts --no-dev --ignore-platform-reqs
 
 # We don't need composer with cache inside image
 FROM ${PHP_IMAGE}

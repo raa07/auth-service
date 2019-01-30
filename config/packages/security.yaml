@@ -1,6 +1,6 @@
 security:
     encoders:
-        App\Security\User:
+        App\UserBundle\Entity\User:
             algorithm: argon2i
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
@@ -18,16 +18,16 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            anonymous: ~
-            logout: ~
-
-            guard:
-                authenticators:
-                    - App\UserBundle\Security\JwtTokenAuthenticator
+#        main:
+#            anonymous: ~
+#            logout: ~
+#
+#            guard:
+#                authenticators:
+#                    - App\UserBundle\Security\JwtTokenAuthenticator
     #        api:
     #            pattern: ^/users/
 
 
-    access_control:
-        - { path: ^/users*, roles: ROLE_USER }
+#    access_control:
+#        - { path: ^/users*, roles: ROLE_USER }

@@ -1,13 +1,13 @@
 <?php
 
-namespace App\AnalyticsBundle;
+namespace App\AnalyticBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use OldSound\RabbitMqBundle\DependencyInjection\OldSoundRabbitMqExtension;
 use OldSound\RabbitMqBundle\DependencyInjection\Compiler\RegisterPartsPass;
 
-class AnalyticsBundle extends Bundle
+class AnalyticBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {

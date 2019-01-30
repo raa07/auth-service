@@ -1,6 +1,6 @@
 <?php
 
-namespace App\AnalyticsBundle\Producer;
+namespace App\AnalyticBundle\Producer;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;

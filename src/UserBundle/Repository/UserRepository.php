@@ -10,13 +10,11 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 class UserRepository implements ObjectRepository
 {
     private $em;
-    private $class;
     private $fileSys;
 
-    public function __construct(EntityManagerInterface $em, string $class, Filesystem $fileSys)
+    public function __construct(EntityManagerInterface $em, Filesystem $fileSys)
     {
         $this->em         = $em;
-        $this->class      = $class;
         $this->fileSys = $fileSys;
     }
 
@@ -60,23 +58,24 @@ class UserRepository implements ObjectRepository
 
     private function getFromStorage(string $id) : array
     {
-        $path = '/storage/users/' . $id . '.json';
+        $path = '/app/storage/users/' . $id . '.json'; //TODO:refactor
         if (!$this->fileSys->exists($path)) {
             return [];
         }
         $data = file_get_contents($path);
-        return (array) json_decode($data);
+        return (array) json_decode($data, true);
     }
 
     private function saveToStorage(string $id, array $data) : bool
     {
         $json = json_encode($data);
-        $path = '/storage/users/' . $id . '.json';
+        $path = '/app/storage/users/' . $id . '.json'; //TODO:refactor
+        $this->fileSys->mkdir('/app/storage/users', 0700);
         return (bool) file_put_contents($path, $json);
     }
 
     private function nicknameToId(string $nickname) : string
     {
-        return password_hash($nickname, PASSWORD_BCRYPT);
+        return md5($nickname);
     }
 }

@@ -2,23 +2,28 @@
 
 namespace App\UserBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Response;
+use App\UserBundle\Entity\User;
+use App\UserBundle\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\View\View;
-
+use FOS\RestBundle\Controller\Annotations\RouteResource;
 /**
  * @RouteResource("User")
  */
 class UsersController
 {
-    public function newAction()
-    {
-        return new View(['test'], 200);
-    } // "new_users"     [GET] /users/new
+    private $userRepo;
+    public $userProvider;
 
-    public function testAction()
+    public function __construct(UserRepository $userRepo)
     {
-        return new View(['test auth'], 200);
-    } // "test"     [GET] /users/test
+        $this->userRepo = $userRepo;
+    }
+
+    public function newAction(Request $request)
+    {
+        $user = new User('test', 'test', 'test', 'test', 10, 'test');
+        $this->userRepo->save($user);
+        return new View(['result' => 'User created'], 200);
+    } // "new_users"     [GET] /users/new
 }

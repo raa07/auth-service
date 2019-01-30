@@ -3,27 +3,35 @@
 namespace App\UserBundle\Controller;
 
 use App\UserBundle\Entity\User;
+use App\UserBundle\Security\UserProvider;
+use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\LcobucciJWTEncoder;
 use \Exception;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use FOS\RestBundle\Controller\Annotations\RouteResource;
 
+/**
+ * @RouteResource("Login", pluralize=false)
+ */
 class LoginController
 {
-    private $token_encoder;
+    private $tokenEncoder;
     private $passEncoder;
+    private $userProvider;
 
-    public function __construct(LcobucciJWTEncoder $token_encoder, UserPasswordEncoderInterface $password_encoder)
+    public function __construct(LcobucciJWTEncoder $tokenEncoder, UserPasswordEncoderInterface $passwordEncoder, UserProvider $userProvider)
     {
-        $this->token_encoder = $token_encoder;
-        $this->passEncoder = $password_encoder;
+        $this->tokenEncoder = $tokenEncoder;
+        $this->passEncoder = $passwordEncoder;
+        $this->userProvider = $userProvider;
     }
 
-    public function login(Request $request): Response
+    public function cgetAction(Request $request): Response
     {
-        $user = new User();
-
+        $nickname = 'test';
+        $user = $this->userProvider->loadUserByUsername($nickname);
         if (!$user) {
             throw new Exception('Not found user with this creds');
         }
@@ -31,9 +39,12 @@ class LoginController
             ->isPasswordValid($user, $request->getPassword());
 
 
-        $token = $this->encoder->encode([
-                'username' => $user->getNickname(),
-                'exp' => time() + 3600 // 1 hour expiration
-            ]);
+        $token = $this->tokenEncoder->encode([
+            'nickname' => $user->getNickname(),
+            'id' => $user->getId(),
+            'exp' => time() + 36000 // 10 hour expiration
+        ]);
+
+        return new View(['token' => $token], 200); //TODO:refactor
     }
 }

@@ -5,3 +5,11 @@ controllers:
 users:
     type:     rest
     resource: App\UserBundle\Controller\UsersController
+
+login:
+    type:     rest
+    resource: App\UserBundle\Controller\LoginController
+
+analytics:
+    type:     rest
+    resource: App\AnalyticBundle\Controller\AnalyticsController
