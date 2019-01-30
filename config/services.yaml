@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+  users_dir: '%kernel.project_dir%/storage/users'
+  analytics_dir: '%kernel.project_dir%/storage/analytics'
 
 services:
     # default configuration for services in *this* file
@@ -40,6 +42,18 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\UserBundle\Repository\UserRepository:
+      arguments:
+        $usersDir: '%users_dir%'
+
+    App\AnalyticsBundle\Consumer\DataSenderConsumer:
+      arguments:
+        $analyticsDir: '%analytics_dir%'
+
+    App\UserBundle\Manager\UserJsonManager:
+          arguments:
+            $usersDir: '%users_dir%'
+
     app.consumer.data_sender:
         class: App\AnalyticBundle\Consumer\DataSenderConsumer
 
@@ -49,7 +63,6 @@ services:
 
     app.user_bundle.repository.user_repository:
         class: App\UserBundle\Repository\UserRepository
-    App\UserBundle\Repository\UserRepository: '@app.user_bundle.repository.user_repository'
 
     OldSound\RabbitMqBundle\RabbitMq\ProducerInterface: '@old_sound_rabbit_mq.send_email_producer'
 
