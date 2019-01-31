@@ -44,7 +44,7 @@ docker-compose up -d --force-recreate
 # Structure
 Api structure:
 ```bash
-api/users/new [POST] fields:
+api/users/new.json [POST] fields:
 	nickname:string
 	last_name:string
 	first_name:string
@@ -52,11 +52,11 @@ api/users/new [POST] fields:
 	password:string
 Returns: ['success' => 'true', 'data' => ['message' => 'User created']
 
-/api/analytics/new [GET] field:
+/api/analytics/new.json [GET] field:
 	source_label:string
 Returns: ['success' => 'true', 'data' => ['message' => 'hit recovered']]
 
-/api/login/auth [POST] fields:
+/api/login/auth.json [POST] fields:
 	nickname:string
 	password:string
 Returns: ['success' => 'true', 'data' => ['token' => $token]]
