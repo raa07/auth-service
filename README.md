@@ -41,3 +41,26 @@ docker-compose up -d --force-recreate
 ### RabbitMQ management
 [http://localhost:15672/](http://localhost:15672/) **[guest:guest]**
 
+# Structure
+Api structure:
+```bash
+api/users/new [POST] fields:
+	nickname:string
+	last_name:string
+	first_name:string
+	age:int
+	password:string
+Returns: ['success' => 'true', 'data' => ['message' => 'User created']
+
+/api/analytics/new [GET] field:
+	source_label:string
+Returns: ['success' => 'true', 'data' => ['message' => 'hit recovered']]
+
+/api/login/auth [POST] fields:
+	nickname:string
+	password:string
+Returns: ['success' => 'true', 'data' => ['token' => $token]]
+```
+For auth using Authorization header.
+
+
