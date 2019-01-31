@@ -1,5 +1,11 @@
-{% extends "ViewBundle::layout.html.twig" %}
+{% extends "@View/layout.html.twig" %}
 
 {% block content %}
-    reg
+    <span id="page_label" data-label="login_page" hidden></span>
+
+    <form id="login_form" name="login_form">
+        <input name="nickname" placeholder="Nickname">
+        <input name="password" placeholder="Password" type="password">
+        <input type="button" class="btn btn-primary event_label" name="submit" value="Submit" onclick="loginProcess()">
+    </form>
 {% endblock %}

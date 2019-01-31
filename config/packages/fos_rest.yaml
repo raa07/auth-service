@@ -1,12 +1,16 @@
 # Read the documentation: https://symfony.com/doc/master/bundles/FOSRestBundle/index.html
 fos_rest:
+  exception:
+    enabled: true
+#    exception_controller: 'App\ViewBundle\Controller\ViewController:index'
   routing_loader:
     default_format: json
   view:
     view_response_listener: true
   format_listener:
     rules:
-      - { path: ^/, prefer_extension: true, fallback_format: json, priorities: [json] }
+      - { path: ^/api, prefer_extension: true, fallback_format: json, priorities: [json] }
+      - { path: '^/', stop: true }
 #    param_fetcher_listener:  true
 #    allowed_methods_listener:  true
 #    routing_loader: true

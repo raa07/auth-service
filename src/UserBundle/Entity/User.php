@@ -32,22 +32,28 @@ class User implements UserInterface
     private $lastName;
 
     /**
+     * @Assert\Regex("/^\d+$/")
      * @Assert\NotBlank
-     * @Assert\Length(min=3)
      */
     private $age;
 
     /**
-     * @Assert\UserPassword
-     * @Assert\Length(min=3)
+     * @Assert\NotBlank
+     * @Assert\Length(min=6)
      */
     private $password;
 
     private $roles = [];
 
-    public function getId() : string
+    public function getId(): string
     {
         return $this->id;
+    }
+
+    public function setId(string $id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getNickname(): ?string
@@ -74,7 +80,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getFirstName(): ?string
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -158,7 +164,7 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'id' => $this->id,
@@ -171,7 +177,7 @@ class User implements UserInterface
     }
 
     // не хочу использовать никакой магии в виде динамическх аргументов и тд
-    public function create(string $id, string $nickname, string $firstName, string $lastName, int $age, string $password='') : User
+    public function create(string $id, string $nickname, string $firstName, string $lastName, int $age, string $password=''): User
     {
         $this->id = $id;
         $this->nickname = $nickname;

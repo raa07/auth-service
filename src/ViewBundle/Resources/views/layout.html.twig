@@ -2,14 +2,96 @@
 <html>
 <head>
     <title>Auth service</title>
-    {{ asset('js/main.js') }}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script>
+        function registerProcess() {
+            sendEvent('register_event');
+            var formData = new FormData(document.forms.register_form);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/api/users/new.json");
+            xhr.onreadystatechange = function() {
+                console.log(xhr.responseText);
+                var data = JSON.parse(xhr.responseText);
+                if (xhr.status != 200) {
+                    alert( data.message );
+                } else {
+                    alert( data.data.message );
+                }
+            };
+            xhr.send(formData);
+
+        }
+
+        function loginProcess() {
+            sendEvent('login_event');
+            var formData = new FormData(document.forms.login_form);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/api/login/auth.json");
+
+            xhr.onreadystatechange = function() {
+                var data = JSON.parse(xhr.responseText);
+                if (xhr.status != 200) {
+                    alert( data.message );
+                } else {
+                    localStorage.setItem('token', data.data.token);
+                    alert( 'Logged in!');
+                }
+            };
+
+            xhr.send(formData);
+
+
+        }
+
+        function sendEvent(sourceLabel){
+            var token = localStorage.getItem('token'),
+                xhr = new XMLHttpRequest();
+
+            xhr.open("GET", "/api/analytics/new?source_label=" + sourceLabel, true);
+            xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+            xhr.send();
+        }
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            var pageLabel = document.getElementById('page_label');
+            if (pageLabel) {
+                var label = pageLabel.getAttribute('data-label');
+                sendEvent(label)
+            }
+        });
+
+    </script>
 </head>
     <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Auth service</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/" onclick="sendEvent('go_to_home')">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register_page" onclick="sendEvent('go_to_register')">Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login_page" onclick="sendEvent('go_to_login')">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
 
         <div class="symfony-content">
             {% block content %}
             {% endblock %}
         </div>
-
     </body>
 </html>

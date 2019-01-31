@@ -1,6 +1,6 @@
-controllers:
-    resource: ../../src/Controller/
-    type: annotation
+#controllers:
+#    resource: ../../src/Controller/
+#    type: annotation
 
 users:
     type:     rest
@@ -13,3 +13,7 @@ login:
 analytics:
     type:     rest
     resource: App\AnalyticBundle\Controller\AnalyticsController
+
+web:
+    resource: App\ViewBundle\Controller\ViewController
+    type: annotation

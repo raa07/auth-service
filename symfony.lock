@@ -119,6 +119,9 @@
     "psr/simple-cache": {
         "version": "1.0.1"
     },
+    "symfony/asset": {
+        "version": "4.2.x-dev"
+    },
     "symfony/cache": {
         "version": "v4.2.2"
     },
@@ -224,6 +227,18 @@
     "symfony/templating": {
         "version": "4.2.x-dev"
     },
+    "symfony/twig-bridge": {
+        "version": "4.2.x-dev"
+    },
+    "symfony/twig-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "369b5b29dc52b2c190002825ae7ec24ab6f962dd"
+        }
+    },
     "symfony/validator": {
         "version": "4.1",
         "recipe": {
@@ -238,6 +253,9 @@
     },
     "symfony/yaml": {
         "version": "v4.2.2"
+    },
+    "twig/twig": {
+        "version": "2.x-dev"
     },
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"

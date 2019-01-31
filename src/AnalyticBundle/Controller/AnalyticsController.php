@@ -9,9 +9,11 @@ use FOS\RestBundle\Controller\Annotations\RouteResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use FOS\RestBundle\Controller\Annotations as Rest;
 
 /**
  * @RouteResource("Analytics")
+ * @Rest\Prefix("api")
  */
 class AnalyticsController
 {
@@ -22,7 +24,9 @@ class AnalyticsController
     private $userProvider;
     private $tokenAuthenticator;
 
-    public function __construct(DataSenderProducer $dataSenderProducer, UserProviderInterface $userProvider, JwtTokenAuthenticator $tokenAuthenticator)
+    public function __construct(DataSenderProducer $dataSenderProducer,
+                                UserProviderInterface $userProvider,
+                                JwtTokenAuthenticator $tokenAuthenticator)
     {
         $this->producer = $dataSenderProducer;
         $this->response = new JsonResponse();
@@ -34,6 +38,8 @@ class AnalyticsController
     {
 
         $user = $this->tokenAuthenticator->getUserIfAuthenticated($request, $this->userProvider);
+        var_dump($user);
+        die();
         if (!empty($user)){
             $id_user = $user->getUsername();
         } else {
@@ -61,7 +67,7 @@ class AnalyticsController
         if (!$uniq_id) {
             $uniq_id = uniqid('',true);
         }
-        $this->response->headers->setCookie(new Cookie(self::UNIQ_ID_COOKIE_KEY, $uniq_id));
+        $this->response->headers->setCookie(Cookie::create(self::UNIQ_ID_COOKIE_KEY, $uniq_id));
 
         return $uniq_id;
     }

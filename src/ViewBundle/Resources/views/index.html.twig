@@ -1,5 +1,8 @@
-{% extends "ViewBundle::layout.html.twig" %}
+{% extends "@View/layout.html.twig" %}
 
 {% block content %}
-    index
+    <span id="page_label" data-label="index_page" hidden></span>
+    <button type="button" class="btn btn-primary event_label" onclick="sendEvent('button_send_data')">Press for send data</button>
+
+
 {% endblock %}

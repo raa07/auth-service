@@ -5,7 +5,6 @@ namespace App\UserBundle\Repository;
 use App\UserBundle\Entity\User;
 use App\UserBundle\Manager\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserRepository implements ObjectRepository
@@ -15,9 +14,12 @@ class UserRepository implements ObjectRepository
     private $usersDir;
     private $passwordEncoder;
 
-    public function __construct(EntityManagerInterface $em, Filesystem $fileSys, string $usersDir, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(EntityManagerInterface $em,
+                                Filesystem $fileSys,
+                                string $usersDir,
+                                UserPasswordEncoderInterface $passwordEncoder)
     {
-        $this->em         = $em;
+        $this->em = $em;
         $this->fileSys = $fileSys;
         $this->usersDir = $usersDir;
         $this->passwordEncoder = $passwordEncoder;
@@ -26,21 +28,6 @@ class UserRepository implements ObjectRepository
     public function find($id)
     {
         return $this->getFromStorage($id);
-    }
-
-    public function findAll()
-    {
-        // TODO: Implement findAll() method.
-    }
-
-    public function findBy(array $criteria)
-    {
-        // TODO: Implement findBy() method.
-    }
-
-    public function findOneBy(array $criteria)
-    {
-        // TODO: Implement findOneBy() method.
     }
 
     public function loadUserByUsername(string $nickname)
@@ -71,6 +58,11 @@ class UserRepository implements ObjectRepository
         return $user;
     }
 
+    public function nicknameToId(string $nickname) : string
+    {
+        return md5($nickname);
+    }
+
     private function getFromStorage(string $id) : array
     {
         $path = $this->usersDir . '/' . $id . '.json';
@@ -78,6 +70,7 @@ class UserRepository implements ObjectRepository
             return [];
         }
         $data = file_get_contents($path);
+
         return (array) json_decode($data, true);
     }
 
@@ -86,11 +79,19 @@ class UserRepository implements ObjectRepository
         $json = json_encode($data);
         $path = $this->usersDir . '/' . $id . '.json';
         $this->fileSys->mkdir($this->usersDir, 0700);
+
         return (bool) file_put_contents($path, $json);
     }
 
-    private function nicknameToId(string $nickname) : string
+    public function findAll()
     {
-        return md5($nickname);
+    }
+
+    public function findBy(array $criteria)
+    {
+    }
+
+    public function findOneBy(array $criteria)
+    {
     }
 }

@@ -17,9 +17,9 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-    App\Controller\:
-        resource: '../src/Controller'
-        tags: ['controller.service_arguments']
+#    App\Controller\:
+#        resource: '../src/Controller'
+#        tags: ['controller.service_arguments']
 
     App\UserBundle\Controller\UsersController:
         class: App\UserBundle\Controller\UsersController

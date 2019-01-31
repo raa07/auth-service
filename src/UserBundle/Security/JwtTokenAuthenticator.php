@@ -44,6 +44,8 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
         $jsonWebToken = $request->headers->get('Authorization');
         $preAuthToken = new PreAuthenticationJWTUserToken($jsonWebToken);
         try {
+            var_dump($this->jwtManager->decode($preAuthToken));
+            die();
             if (!$payload = $this->jwtManager->decode($preAuthToken)) {
                 throw new InvalidTokenException('Invalid JWT Token');
             }
@@ -64,6 +66,16 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
 
         $nickname = $data['nickname'];
         return $userProvider->loadUserByUsername($nickname);
+    }
+
+    public function tokenGenerate(User $user)
+    {
+        $token = $this->jwtEncoder->encode([
+            'nickname' => $user->getNickname(),
+            'id' => $user->getId(),
+            'exp' => time() + 36000 // 10 hour expiration
+        ]);
+        return $token;
     }
 
     public function getUserIfAuthenticated(Request $request, UserProviderInterface $userProvider)
