@@ -17,6 +17,7 @@ openssl rsa -pubout -in config/jwt/private.pem -out config/jwt/public.pem
 docker-compose up -d
 open http://localhost
 ```
+In .env file JWT_PASSPHRASE must be equals your secret key.
 
 ### Install vendors
 ```bash
