@@ -52,6 +52,10 @@ services:
         class: SocialTech\SlowStorage
     SocialTech\StorageInterface: '@social_tech.slow_storage'
 
+    user_provider_json:
+      class: App\UserBundle\Security\UserProvider
+    Symfony\Component\Security\Core\User\UserProviderInterface: '@user_provider_json'
+
     app.user_bundle.repository.user_repository:
         class: App\UserBundle\Repository\UserRepository
         public: true

@@ -20,18 +20,24 @@ use Lexik\Bundle\JWTAuthenticationBundle\Security\Authentication\Token\PreAuthen
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\InvalidTokenException;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\ExpiredTokenException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Lexik\Bundle\JWTAuthenticationBundle\TokenExtractor\TokenExtractorInterface;
 
 class JwtTokenAuthenticator extends AbstractGuardAuthenticator
 {
     private $em;
     private $jwtEncoder;
     private $jwtManager;
+    private $tokenExtractor;
 
-    public function __construct(JWTTokenManagerInterface $jwtManager, JWTEncoderInterface $jwtEncoder, EntityManagerInterface $em)
+    public function __construct(JWTTokenManagerInterface $jwtManager,
+                                JWTEncoderInterface $jwtEncoder,
+                                EntityManagerInterface $em,
+                                TokenExtractorInterface $tokenExtractor)
     {
         $this->jwtManager = $jwtManager;
         $this->em = $em;
         $this->jwtEncoder = $jwtEncoder;
+        $this->tokenExtractor = $tokenExtractor;
     }
 
     public function supports(Request $request)
@@ -41,11 +47,15 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
 
     public function getCredentials(Request $request)
     {
-        $jsonWebToken = $request->headers->get('Authorization');
+        $tokenExtractor = $this->tokenExtractor;
+        if (!$tokenExtractor instanceof TokenExtractorInterface) {
+            throw new \RuntimeException(sprintf('Method "%s::getTokenExtractor()" must return an instance of "%s".', __CLASS__, TokenExtractorInterface::class));
+        }
+        if (false === ($jsonWebToken = $tokenExtractor->extract($request))) {
+            return;
+        }
         $preAuthToken = new PreAuthenticationJWTUserToken($jsonWebToken);
         try {
-            var_dump($this->jwtManager->decode($preAuthToken));
-            die();
             if (!$payload = $this->jwtManager->decode($preAuthToken)) {
                 throw new InvalidTokenException('Invalid JWT Token');
             }
@@ -57,13 +67,11 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
             throw new InvalidTokenException('Invalid JWT Token', 0, $e);
         }
         return $preAuthToken;
-
     }
 
     public function getUser($preAuthToken, UserProviderInterface $userProvider)
     {
         $data = $preAuthToken->getPayload();
-
         $nickname = $data['nickname'];
         return $userProvider->loadUserByUsername($nickname);
     }
@@ -81,8 +89,8 @@ class JwtTokenAuthenticator extends AbstractGuardAuthenticator
     public function getUserIfAuthenticated(Request $request, UserProviderInterface $userProvider)
     {
         try {
-            $creads = $this->getCredentials($request);
-            return $this->getUser($creads, $userProvider);
+            $creds = $this->getCredentials($request);
+            return $this->getUser($creds, $userProvider);
         } catch (\Exception $exception) {
             return [];
         }

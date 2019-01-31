@@ -36,12 +36,9 @@ class AnalyticsController
 
     public function newAction(Request $request)
     {
-
         $user = $this->tokenAuthenticator->getUserIfAuthenticated($request, $this->userProvider);
-        var_dump($user);
-        die();
         if (!empty($user)){
-            $id_user = $user->getUsername();
+            $id_user = $user->getId();
         } else {
             $id_user = $this->getUniqId($request);
         }
